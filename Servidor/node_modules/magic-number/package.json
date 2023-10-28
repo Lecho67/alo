@@ -1,0 +1,47 @@
+{
+  "name": "magic-number",
+  "version": "0.1.6",
+  "description": "Determine a file's type from its magic number.",
+  "main": "magic-number.js",
+  "preferGlobal": false,
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-replace": "^0.6.1",
+    "gulp-typescript": "^3.2.1",
+    "minimatch": "^3.0.2",
+    "mocha": "^3.4.2",
+    "should": "^12.0.0",
+    "typescript": "^2.5.1"
+  },
+  "scripts": {
+    "build": "gulp",
+    "test": "node node_modules/mocha/bin/mocha magic-number.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stpettersens/node-magic-number"
+  },
+  "keywords": [
+    "magicnumber",
+    "magic",
+    "number",
+    "file",
+    "detection",
+    "type"
+  ],
+  "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+  "contributors": [
+    {
+      "name": "Thurston",
+      "url": "https://github.com/tstone2077"
+    },
+    {
+      "name": "Casey Joel Parker",
+      "url": "https://github.com/caseyparker"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stpettersens/node-magic-number/issues"
+  }
+}
