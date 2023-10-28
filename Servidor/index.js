@@ -229,7 +229,7 @@ app.get("/foto/:idUsuario", async (req, res) => {
 });
 
 
-app.get("/pene", async (req, res) => {
+app.get("/buzon/Detalles/", async (req, res) => {
   const result = await conexionAsync(
     `SELECT nombre, archivo FROM EVIDENCIA WHERE id_evidencia = 2`
   );
@@ -246,6 +246,7 @@ app.get("/pene", async (req, res) => {
     res.status(404).send("No se encontró el archivo.");
   }
 });
+
 app.get("/download", async (req, res) => {
   const result = await conexionAsync("SELECT * FROM EVIDENCIA");
   const archivos = [];
@@ -869,6 +870,7 @@ app.use((req, res, next) => {
 // app.get('/inicio', (req, res) => {
 //     res.send(paginas.creadorDePaginaIndexhtml());
 // });
+
 // generador de pagina de inicio
 app.get("", (req, res) => {
   res.redirect("/inicio");
@@ -1083,9 +1085,9 @@ app.get("/clasificaciones", async (req, res) => {
 });
  
 app.get("/clasificacionesGrupos", async (req, res) => {
-    try {
-      const clasificacionesGrupos =
-        await conexionAsync(`SELECT G.nombre AS NombreGrupo, GROUP_CONCAT(DISTINCT CASE WHEN P.rol = 'P' THEN U.nombre ELSE NULL END) AS Padrino, G.id_grupo,
+  try {
+    const clasificacionesGrupos =
+      await conexionAsync(`SELECT G.nombre AS NombreGrupo, GROUP_CONCAT(DISTINCT CASE WHEN P.rol = 'P' THEN U.nombre ELSE NULL END) AS Padrino, G.id_grupo,
           (SUM(CASE WHEN P.rol = 'C' THEN A.unidades ELSE 0 END) / (COUNT(DISTINCT CASE WHEN P.rol = 'C' THEN P.usuario_id END)* 72)) * 100 AS PorcentajeCompletitud
           FROM GRUPO G
           INNER JOIN PARTICIPACION P ON G.id_grupo = P.grupo_id
@@ -1093,14 +1095,16 @@ app.get("/clasificacionesGrupos", async (req, res) => {
           LEFT JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
           LEFT JOIN ACTIVIDAD A ON PC.id_plancarrera = A.id_plancarrera AND A.estado = true
           GROUP BY G.nombre,G.id_grupo ORDER BY PorcentajeCompletitud DESC`);
-      res.send(
-        interfazColaborador.creadorDePaginasClasificacionesGrupos(clasificacionesGrupos)
-      );
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).send("Error en la consulta a la base de datos");
-    }
-  });
+    res.send(
+      interfazColaborador.creadorDePaginasClasificacionesGrupos(
+        clasificacionesGrupos
+      )
+    );
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error en la consulta a la base de datos");
+  }
+});
 
 app.get("/perfil/:userId", async (req, res) => {
   try {
@@ -1136,7 +1140,7 @@ app.get("/perfil/:userId", async (req, res) => {
 
     // A continuación, puedes crear una página HTML con la información del usuario y enviarla como respuesta.
     // Puedes usar una plantilla HTML similar a la que usaste en "creadorDePaginaEmpresa" pero personalizada para el perfil del usuario.
- 
+
     // Luego, envía la página como respuesta.
     res.send(interfazColaborador.creadorDePaginasPerfil(usuario));
   } catch (error) {
