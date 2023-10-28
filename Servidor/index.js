@@ -229,7 +229,7 @@ app.get("/foto/:idUsuario", async (req, res) => {
 });
 
 
-app.get("/pene", async (req, res) => {
+app.get("/franz", async (req, res) => {
   const result = await conexionAsync(
     `SELECT nombre, archivo FROM EVIDENCIA WHERE id_evidencia = 2`
   );
