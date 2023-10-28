@@ -53,6 +53,7 @@ const interfazDirectivo = {
 }; 
 
 let usuarioActivo = 600;
+let periodoActual = "";
 
 // Variables PDFKit (Generar reportes)
 const PDFDocument = require("pdfkit");
@@ -227,6 +228,24 @@ app.get("/foto/:idUsuario", async (req, res) => {
   }
 });
 
+
+app.get("/pene", async (req, res) => {
+  const result = await conexionAsync(
+    `SELECT nombre, archivo FROM EVIDENCIA WHERE id_evidencia = 2`
+  );
+
+  if (result.length > 0) {
+    const nombreArchivo = result[0].nombre;
+    const archivoBuffer = result[0].archivo;
+
+    res.setHeader('Content-Disposition', `attachment; filename="${nombreArchivo}"`);
+    res.setHeader('Content-Type', 'application/octet-stream'); // Cambia el tipo MIME según el tipo de archivo que estás almacenando.
+
+    res.send(archivoBuffer);
+  } else {
+    res.status(404).send("No se encontró el archivo.");
+  }
+});
 app.get("/download", async (req, res) => {
   const result = await conexionAsync("SELECT * FROM EVIDENCIA");
   const archivos = [];
