@@ -15,8 +15,8 @@ const conexion = require("./baseDeDatos.js");
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "Bandido",
-  database: "alo",
+  password: "123456789",
+  database: "InnovateU",
 });
 const pool = mysql2.createPool({
     host: "localhost",
