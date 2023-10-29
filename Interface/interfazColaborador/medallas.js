@@ -29,12 +29,12 @@ function creadorDePaginasLogros(logros) {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -443,7 +443,7 @@ function creadorDePaginasMedallas(logros, nombre) {
                     <div class="col-1" style="text-align: center;">
                       <ul class="button-list">
                         <li><h2 class="bold">Puntos de logro: ${medalla.puntos}</h2></li>
-                        <li><a href="/logros-eliminar" class="templatemo-add-btn">Agregar al perfil</a></li>
+                        <li><a href="/agregarAlPefil/${medalla.id_medalla}" class="templatemo-add-btn">Agregar al perfil</a></li>
                       </ul>
                     </div>
                   </div>
@@ -556,12 +556,12 @@ function creadorDePaginasLogrosEliminar() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -904,12 +904,12 @@ function creadorDePaginasLogrosActuales() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -1142,12 +1142,12 @@ function creadorDePaginasLogrosActualesEliminar() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -1369,10 +1369,11 @@ function creadorDePaginasLogrosCustom(medallas){
   }
   const page = `<!DOCTYPE html>
   <html lang="en">
-    <head>
+  
+  <head>
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">  
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Visual Admin Dashboard - Maps</title>
       <meta name="description" content="">
       <meta name="author" content="templatemo">
@@ -1380,150 +1381,151 @@ function creadorDePaginasLogrosCustom(medallas){
       <link href="/estilos/css/font-awesome.min.css" rel="stylesheet">
       <link href="/estilos/css/bootstrap.css" rel="stylesheet">
       <link href="/estilos/css/templatemo-style.css" rel="stylesheet">
-    </head>
-    <body>
+  </head>
+  
+  <body>
       <div class="templatemo-flex-row">
-        <div class="templatemo-sidebar">
-          <header class="templatemo-site-header">
-            <h1>Vortex Bird</h1>  
-          </header>
-          <div class="profile-photo-container">
-            <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-          </div>
-          <div class="mobile-menu-icon">
-              <i class="fa fa-bars"></i>
-            </div>
-          <nav class="templatemo-left-nav">          
-            <nav class="templatemo-left-nav">          
-              <ul>
-                <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
-    
-                <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                  
-                <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
+          <div class="templatemo-sidebar">
+              <header class="templatemo-site-header">
+                  <h1>Vortex Bird</h1>
+              </header>
+              <div class="profile-photo-container">
+                  <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive">
+              </div>
+              <div class="mobile-menu-icon">
+                  <i class="fa fa-bars"></i>
+              </div>
+              <nav class="templatemo-left-nav">
+                  <ul>
+                      <li><a href="/inicio"><img class="icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
 
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
-                
-                <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-    
-                <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                
-                <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
+                      <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
-                <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-    
-                <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-     
-              </ul>  
-            </nav>
-          </nav>
-        </div>
-        <div class="templatemo-content col-1 light-gray-bg">
-          <div class="templatemo-top-nav-container">
-            <div class="row">
-              <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
-                <ul class="text-uppercase">
-                  <li><a href="/mislogros">Todos</a></li>
-                  <li><a href="logros-actuales">2023-Q1</a></li>
-                  <li><a href=""class="active">Personales</a></li>
+                      <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
   
-                </ul>  
-              </nav> 
-            </div>
+                      <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
+  
+                      <li><a href="/empresa"><img class="icon" src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
+  
+                      <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
+  
+                      <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
+  
+                      <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
+  
+                      <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
+  
+                  </ul>
+              </nav>
           </div>
-          <div class="templatemo-content-widget white-bg col-2">
-            <div class="templatemo-flex-row flex-content-row">
-              <div class="col-1">
-                <div class="templatemo-content-widget marco-insignia-mostrada">
-                  <img class="insignia-mostrada" src="images/Insignias/lockeado.png" alt="Sunset ">
-                </div>
-              </div>
-              <div class=" templatemo-content-widget white-bg templatemo-overflow-hidden">
-                <div class="templatemo-flex-row flex-content-row">
-                  <div class="" style="width:200px">
-                
-                    <h2>Nombre: Talentoso</h2><hr>
-                    <br>
-                    <p>Estado: No conseguido</p>
-                    <br>
-                    <p>Descripción: Consigue 5 logros en un cuartil de año</p> 
+          <div class="templatemo-content col-1 light-gray-bg">
+              <div class="templatemo-top-nav-container">
+                  <div class="row">
+                      <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                          <ul class="text-uppercase">
+                              <li><a href="/mislogros">Todos</a></li>
+                              <li><a href="logros-actuales">2023-Q1</a></li>
+                              <li><a href="" class="active">Personales</a></li>
+  
+                          </ul>
+                      </nav>
                   </div>
-                </div>
               </div>
-              
-              <div class="col-1 templatemo-content-widget white-bg templatemo-overflow-hidden">
-                <div class="templatemo-flex-row flex-content-row">
-                  <div class="col-1" style="text-align: center;">
-                    <ul class="button-list">
-                      <li><h2 class="bold">Insignia Creada Por Padrino</h2></li>
-                      <li><a href="logros-custom-eliminar" class="templatemo-add-btn">Agregar al perfil</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div class="col-1 templatemo-content-widget white-bg templatemo-overflow-hidden">
-                <div class="templatemo-flex-row flex-content-row">
-                  <div class="col-1">
-                    <h2 class="templatemo-inline-block">Insignias en perfil:</h2><hr>
+              <div class="templatemo-content-widget white-bg col-2">
                   <div class="templatemo-flex-row flex-content-row">
-                    <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="images/Insignias/7g.png" alt="">
+                      <div class="col-1">
+                          <div class="templatemo-content-widget marco-insignia-mostrada">
+                              <img class="insignia-mostrada" src="images/Insignias/lockeado.png" alt="Sunset ">
+                          </div>
+                      </div>
+                      <div class="templatemo-content-widget white-bg templatemo-overflow-hidden">
+                          <div class="templatemo-flex-row flex-content-row">
+                              <div class="" style="width:200px">
   
-                    </div>
-                    <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="images/Insignias/god.png" alt="">
+                                  <h2>Nombre: Talentoso</h2>
+                                  <hr>
+                                  <br>
+                                  <p>Estado: No conseguido</p>
+                                  <br>
+                                  <p>Descripción: Consigue 5 logros en un cuartil de año</p>
+                              </div>
+                          </div>
+                      </div>
   
-                    </div>
-                    <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="images/Insignias/decepticon.png" alt="">
+                      <div class="col-1 templatemo-content-widget white-bg templatemo-overflow-hidden">
+                          <div class="templatemo-flex-row flex-content-row">
+                              <div class="col-1" style="text-align: center;">
+                                  <ul class="button-list">
+                                      <li>
+                                          <h2 class="bold">Insignia Creada Por Padrino</h2>
+                                      </li>
+                                      <li><a href="logros-custom-eliminar" class="templatemo-add-btn">Agregar al perfil</a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-1 templatemo-content-widget white-bg templatemo-overflow-hidden">
+                          <div class="templatemo-flex-row flex-content-row">
+                              <div class="col-1">
+                                  <h2 class="templatemo-inline-block">Insignias en perfil:</h2>
+                                  <hr>
+                                  <div class="templatemo-flex-row flex-content-row">
+                                      <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
+                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/7g.png" alt="">
   
-                    </div>
+                                      </div>
+                                      <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
+                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/god.png" alt="">
+  
+                                      </div>
+                                      <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
+                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/decepticon.png" alt="">
+  
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  </div>
-                </div>
+                  <hr>
               </div>
-            </div>
-            <hr>  
-          </div>
-          <div class="templatemo-content-widget white-bg col-2" >
-            <details>
-              <summary>
-                <h2>Logros</h2>
-                <span class="icon">▼</span>
-              </summary>
-                <div>
-                  <table class="tabla-logros">
+              <div class="templatemo-content-widget white-bg col-2">
+                  <details>
+                      <summary>
+                          <h2>Logros</h2>
+                          <span class="icon">▼</span>
+                      </summary>
+                      <div>
+                          <table class="tabla-logros">
                   
                       ${res}
-                    
-                  </table>
-                </div>
-            </details>
-          </div>
-          <div class="templatemo-content-widget white-bg col-2" >
-          <form action="/CrearMedalla" method="POST" enctype="multipart/form-data">
-            <details>
-              <summary>
-                <h2>Crear Insignia Personalizada</h2>
-                <span class="icon">▼</span>
-              </summary>
-                <div class="templatemo-content-widget>
-                  <br>
-                    
-                    <div class="templatemo-content-widget light-gray-bg" style="width: 30%; display: grid; align-items: center">
-                      <label for="nombre">Nombre: </label>
-                      <input type="text" name="nombre" id="nombre" placeholder="Nombre de la insignia"><br>
-                      <label for="Descripcion">Descripción: </label>
-                      <input type="text" name="descripcion" id="Descripcion" placeholder="Inserte Una Descripción"><br><br>
-                      <label for="file">Foto de la insignia: </label>
-                      <input type="file" name="file" id="file"><br>
-                      <input type="submit" class="ajustar-actulizar"value="Crear Nueva Insignia">
-                    </div>
-            </form>
-            </details>
+                      </table>
+                      </div>
+                  </details>
+              </div>
+              <div class="templatemo-content-widget white-bg col-2">
+                  <form action="/CrearMedalla" method="POST" enctype="multipart/form-data">
+                      <details>
+                          <summary>
+                              <h2>Crear Insignia Personalizada</h2>
+                              <span class="icon">▼</span>
+                          </summary>
+                          <div class="templatemo-content-widget light-gray-bg" style="width: 30%; display: grid; align-items: center">
+                              <label for="nombre">Nombre: </label>
+                              <input type="text" name="nombre" id="nombre" placeholder="Nombre de la insignia"><br>
+                              <label for="Descripcion">Descripción: </label>
+                              <input type="text" name="descripcion" id="Descripcion" placeholder="Inserte Una Descripción"><br><br>
+                              <label for="file">Foto de la insignia: </label>
+                              <input type="file" name="file" id="file"><br>
+                              <input type="submit" class="ajustar-actulizar" value="Crear Nueva Insignia">
+                          </div>
+                      </details>
+                  </form>
+              </div>
           </div>
       </div>
-    </body>
+  </body>
+  
   </html>`
   return page
 }
@@ -1578,12 +1580,12 @@ function creadorDePaginasSelectorLogrosCustom(medallas,medalla){
             <nav class="templatemo-left-nav">          
               <ul>
                 <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+                <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
                 <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
                   
                 <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                 
                 <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
     
@@ -1637,7 +1639,7 @@ function creadorDePaginasSelectorLogrosCustom(medallas,medalla){
                   <div class="col-1" style="text-align: center;">
                     <ul class="button-list">
                       <li><h2 class="bold">Insignia Creada Por Padrino</h2></li>
-                      <li><a href="/logros-custom-eliminar" class="templatemo-add-btn">Agregar al perfil</a></li>
+                      <li><a href="/agregarAlPefil/${medalla[0].id_medalla}" class="templatemo-add-btn">Agregar al perfil</a></li>
                     </ul>
                   </div>
                 </div>
@@ -1741,12 +1743,12 @@ function creadorDePaginasLogrosCustomEliminar() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       

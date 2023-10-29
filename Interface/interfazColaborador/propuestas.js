@@ -20,11 +20,13 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
       var dia = element.fecha_inicio.getDate();
       var mes = element.fecha_inicio.getMonth() + 1;
       var anio = element.fecha_inicio.getFullYear();
-      var fechaComoString = dia + "/" + mes + "/" + anio;
+      var fechaString = dia + "/" + mes + "/" + anio;
+      var fechaISO = element.fecha_inicio.toISOString().slice(0, 10);
       var dia1 = element.fecha_fin.getDate();
       var mes1 = element.fecha_fin.getMonth() + 1;
       var anio1 = element.fecha_fin.getFullYear();
-      var fechaComoString1 = dia1 + "/" + mes1 + "/" + anio1;
+      var fechaString1 = dia1 + "/" + mes1 + "/" + anio1;
+      var fechaISO1 = element.fecha_fin.toISOString().slice(0, 10);
       if (element.tipo == 1) {
         aux = "Retorno a Vortex Bird";
         ur += parseInt(element.unidades);
@@ -51,10 +53,10 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
         <div class=" col-1" style="text-align: center; margin-top: 10px;">
           <h2>Fecha Inicio: <span id="fecha_inicio${
             i + 1
-          }">${fechaComoString}</span></h2><br><br>
+          }">${fechaString}</span></h2><br><br>
           <h2>Fecha Final: <span id="fecha_fin${
             i + 1
-          }">${fechaComoString1}</span></h2><br><br>
+          }">${fechaString1}</span></h2><br><br>
           <h2>Presupuesto: <span id="presupuesto${i + 1}">${
         element.presupuesto
       }$</span></h2>
@@ -134,6 +136,14 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
   } else if (propuestaExistente[0].estado == "C") {
     buttonAction = `<button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="submitForm()">Cancelar Propuesta</button>`;
     actividadesPropuestas.forEach((element, i) => {
+      var dia = element.fecha_inicio.getDate();
+      var mes = element.fecha_inicio.getMonth() + 1;
+      var anio = element.fecha_inicio.getFullYear();
+      var fechaString = dia + "/" + mes + "/" + anio;
+      var dia1 = element.fecha_fin.getDate();
+      var mes1 = element.fecha_fin.getMonth() + 1;
+      var anio1 = element.fecha_fin.getFullYear();
+      var fechaString1 = dia1 + "/" + mes1 + "/" + anio1;
       if (element.tipo == 1) {
         aux = "Retorno a Vortex Bird";
         ur += parseInt(element.unidades);
@@ -159,10 +169,10 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
         </div>
         <div class=" col-1" style="text-align: center; margin-top: 10px;">
           <h2>Fecha Inicio: <span id="fecha_inicio${i + 1}">${
-        element.fecha_inicio
+        fechaString
       }</span></h2><br><br>
           <h2>Fecha Final: <span id="fecha_fin${i + 1}">${
-        element.fecha_fin
+        fechaString1
       }</span></h2><br><br>
           <h2>Presupuesto: <span id="presupuesto${i + 1}">${
         element.presupuesto
@@ -333,12 +343,12 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -499,12 +509,12 @@ function sinPropuestas() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
       

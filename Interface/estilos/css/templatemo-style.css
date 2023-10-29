@@ -151,14 +151,14 @@ footer { padding: 15px; }
 	transition: all 0.3s ease;
 }
 .marco-insignia-mostrada {
-	width: 200px;
+	width:150px;
 	background-color: rgba(191, 189, 189, 0.20);
 	text-align: center;
 	margin: auto;	
 	transition: 0.3s;
 }
 .marco-insignia-en-lista {
-	width: 200px;
+	width: 150px;
 	background-color: rgba(191, 189, 189, 0.20);
 	text-align: center;
 	margin: auto;	
@@ -169,21 +169,21 @@ footer { padding: 15px; }
 }
 
 .marco-insignia-en-perfil {
-	padding: 5%; border-radius: 50%;
+	padding: 3%; border-radius: 50%;
 	background-color: rgba(191, 189, 189, 0.70);
 	text-align: center;
 	margin: auto;
-	width: 33.3%;
+	width: 33.5%;
 }
 .tabla-logros {
 	margin: auto;
 }
 .insignia-mostrada {
-	width: 140px;
-	height: 140px;
+	width: 115px;
+	height: 110px;
 }
 .insignia-mostrada-en-perfil {
-	width: 50px;
+	width: 40px;
 	border-radius: 30%;
 }
 .insignia-mostrada-en-perfil-2 {
@@ -359,12 +359,15 @@ footer { padding: 15px; }
 
 /* Content Widget */
 .templatemo-content-widget {
-	border-radius: 10px;
-	padding: 30px;	
+		
 	position: relative;
-	margin: 10px;
- 	box-shadow: 0px 0px 1px 1px rgba(161, 159, 159, 0.1);
-}
+	margin: 20px; /* Ajusta el valor del margen según tus preferencias */
+    padding: 20px; /* Ajusta el espacio interno según tus preferencias */
+	border: 4px solid #ccc; /* Aumentamos el grosor del borde a 4 píxeles */
+	border-radius: 15px; /* Bordes redondeados más pronunciados */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave (opcional) */
+	
+}	
 .templatemo-content-widget.no-padding {	padding: 0; }
 .fa-times {
 	border-radius: 15px;
@@ -908,4 +911,100 @@ input[type="radio"]:checked + label span {
   .actualizar-btn:hover {
 	background-color: #056469;
   }
+
+.mi-titulo {
+    text-align: center;
+    margin: 20px; /* Puedes ajustar el valor del margen según tus preferencias */
+    background-color: #39ADB4; /* Color de fondo para el título */
+    padding: 10px; /* Espacio interno dentro del título */
+    border-radius: 10px; /* Bordes redondeados */
+	font-family: 'Montserrat', sans-serif;
+}
+
+.ajustar-detalles-claro {
+    margin: 15px; /* Puedes ajustar el valor del margen según tus preferencias */
+    background-color: aliceblue;
+    color: #000000;
+    border: 2px #000000;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Agrega este estilo al final de tu archivo CSS */
+
+.panel-heading.templatemo-position-relative {
+    margin: 20px; /* Puedes ajustar el valor del margen según tus preferencias */
+}
+
+.table-responsive{
+
+	margin: 20px;
+}
+
+
+.panel-heading-red {
+    background-color: #E14311; /* Cambia este valor al color que desees */
+    color: white; /* Cambia este valor si quieres un color de texto diferente */
+	margin: 20px;
+}
+
+#colaborador {
+	width: 200px; /* Define el ancho del select según tus preferencias */
+	padding: 10px; /* Espacio interno dentro del select */
+	font-size: 16px; /* Tamaño del texto */
+	border: 1px solid #ccc; /* Borde del select */
+	border-radius: 5px; /* Bordes redondeados */
+	background-color:  #39ADB4;
+	color: #333; /* Color del texto */
+  }
   
+  #colaborador option {
+	font-size: 16px; /* Tamaño del texto en las opciones */
+	color: #333; /* Color del texto en las opciones */
+  }
+
+  
+#colaborador:hover{
+
+	background-color: #0c8086;
+}
+
+#padrino{
+	width: 210px; /* Define el ancho del select según tus preferencias */
+	padding: 10px; /* Espacio interno dentro del select */
+	font-size: 16px; /* Tamaño del texto */
+	border: 1px solid #ccc; /* Borde del select */
+	border-radius: 5px; /* Bordes redondeados */
+	background-color:  #39ADB4;
+	color: #333; /* Color del texto */
+  }
+  
+  #padrino option {
+	font-size: 16px; /* Tamaño del texto en las opciones */
+	color: #333; /* Color del texto en las opciones */
+  }
+
+  
+#padrino:hover{
+
+	background-color: #0c8086;
+}
+
+input[type="submit"] {
+	width: 100px; /* Define el ancho del botón según tus preferencias */
+	padding: 10px; /* Espacio interno dentro del botón */
+	font-size: 16px; /* Tamaño del texto */
+	border: none; /* Quita el borde */
+	border-radius: 5px; /* Bordes redondeados */
+	background-color: #39ADB4; /* Color de fondo */
+	color: #333; /* Color del texto */
+	cursor: pointer; /* Cambia el cursor al pasar por encima */
+  }
+  
+  input[type="submit"]:hover {
+	background-color: #0c8086; /* Cambia el color de fondo al pasar por encima */
+  }
+ 

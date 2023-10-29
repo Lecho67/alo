@@ -21,7 +21,7 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
     <td>${element.nombreActividad}</td>
     <td>${element.nombre}</td>
     <td>${element.fecha}</td>
-    <td><a href="/descargarEvidencia/${element.id_evidencia}" class="templatemo-link" id ='Detalles'>Detalles</a></td>
+    <td><a href="/descargarEvidencia/${element.id_evidencia}" class="templatemo-link" id ='Detalles'>Descargar Evidencia</a></td>
   </tr>`; 
   });
 
@@ -35,6 +35,7 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
     <meta name="description" content="">
     <meta name="author" content="templatemo">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link href="/estilos/css/font-awesome.min.css" rel="stylesheet">
     <link href="/estilos/css/bootstrap.css" rel="stylesheet">
     <link href="/estilos/css/templatemo-style.css" rel="stylesheet">
@@ -74,12 +75,12 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
               
               <li><a href="/empresa" ><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -97,6 +98,8 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
       <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-content-container">
           <div class="templatemo-content-widget no-padding ">
+          <h1 class="mi-titulo">Buzon Coach</h1>
+
             <details class="ajustar-detalles-claro">
               <summary style="text-align: center;">
                 <h4 style="text-align: center;">Solicitudes De Plan Carrera</h4>
@@ -152,9 +155,13 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
             </div>              
             
                                     
-          </div> 
+          </div>
+          <div class="templatemo-content-widget no-padding ">
            
-        </div>
+          
+          
+          </div>
+        </?div>
       </div>
     </div>
   </body>
@@ -177,11 +184,13 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
       var dia = element.fecha_inicio.getDate();
       var mes = element.fecha_inicio.getMonth() + 1;
       var anio = element.fecha_inicio.getFullYear();
-      var fechaComoString = dia + "/" + mes + "/" + anio;
+      var fechaString = dia + "/" + mes + "/" + anio;
+      var fechaISO = element.fecha_inicio.toISOString().slice(0, 10);
       var dia1 = element.fecha_fin.getDate();
       var mes1 = element.fecha_fin.getMonth() + 1;
       var anio1 = element.fecha_fin.getFullYear();
-      var fechaComoString1 = dia1 + "/" + mes1 + "/" + anio1;
+      var fechaString1 = dia1 + "/" + mes1 + "/" + anio1;
+      var fechaISO1 = element.fecha_fin.toISOString().slice(0, 10);
       if (element.tipo == 1) {
         aux = "Retorno a Vortex Bird";
         ur += parseInt(element.unidades);
@@ -208,10 +217,10 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
         <div class=" col-1" style="text-align: center; margin-top: 10px;">
           <h2>Fecha Inicio: <span id="fecha_inicio${
             i + 1
-          }">${fechaComoString}</span></h2><br><br>
+          }">${fechaString}</span></h2><br><br>
           <h2>Fecha Final: <span id="fecha_fin${
             i + 1
-          }">${fechaComoString1}</span></h2><br><br>
+          }">${fechaString1}</span></h2><br><br>
           <h2>Presupuesto: <span id="presupuesto${i + 1}">${
         element.presupuesto
       }$</span></h2>
@@ -261,11 +270,11 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                             <label for="inputLastName">Fecha Inicio</label>
                             <input type="date" class="form-control" id="FechaInicio${
                               element.id_PA
-                            }" name ="FechaInicio" placeholder="Fecha Inicio" value="${element.fecha_inicio}"><br><br>
+                            }" name ="FechaInicio" placeholder="Fecha Inicio" value="${fechaISO}"><br><br>
                             <label for="inputLastName">Fecha Finalización</label>
                             <input type="date" class="form-control" id="FechaFinalizacion${
                               element.id_PA
-                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización" value="${element.fecha_fin}"><br><br>
+                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización" value="${fechaISO1}"><br><br>
                             <label for="inputLastName">Presupuesto de la Actividad</label>
                             <input type="number" class="form-control" id="Presupuesto${
                               element.id_PA
@@ -413,12 +422,12 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
-                  <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
+                  <li><a href="/buzon"  class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -426,7 +435,7 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                   
                   <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
                   
-                  <li><a href="/miperfil" class="active"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
+                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
       
                   <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
        
@@ -688,16 +697,16 @@ function creadorDePaginasMiGrupo(miGrupo) {
             <nav class="templatemo-left-nav">          
               <ul>
                 <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+                
+                <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
                 <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                   
-                <li><a href="/grupos"class="active"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
+                <li><a href="/grupos" class="active"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
                 
                 <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
     
-                <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
+                <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
     
                 <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
     
@@ -809,4 +818,4 @@ function creadorDePaginasMiGrupo(miGrupo) {
   return page;
 }
 
-module.exports = {creadorDePaginasMiGrupo, creadorDePaginaBuzon,creadorDePaginaVistaPropuestas}
+module.exports = {creadorDePaginasMiGrupo,creadorDePaginaBuzon,creadorDePaginaVistaPropuestas}

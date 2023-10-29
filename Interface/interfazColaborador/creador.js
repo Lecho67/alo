@@ -54,12 +54,12 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio" class="active"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
               
               <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -314,12 +314,14 @@ function creadorDePaginaBuzon() {
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
 
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
+             
               
               <li><a href="/empresa" ><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -412,12 +414,12 @@ function creadorDePaginaBuzonDetalles(propuestas) {
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
               
               <li><a href="/empresa" ><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -516,12 +518,12 @@ function creadorDePaginaBuzonDirectivo(propuestas) {
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
               
               <li><a href="/empresa" ><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -631,12 +633,12 @@ function creadorDePaginaEmpresa(usuario) {
             <nav class="templatemo-left-nav">          
               <ul>
                 <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
                 <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
                   
                 <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                 
                 <li><a href="empresa" class="active"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
     
@@ -727,12 +729,12 @@ function creadorDePaginasMiPerfil(usuarioPerfil) {
             <nav class="templatemo-left-nav">          
               <ul>
                 <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+
+                <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
                 <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
                   
                 <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                 
                 <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
     
