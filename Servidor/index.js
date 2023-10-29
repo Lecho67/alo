@@ -6,7 +6,19 @@ const path = require("path");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../Interface")));
-
+// Definir la ruta base dependiendo del localhost
+// app.use((req, res, next) => {
+//   let basePath = "";
+//   if (req.hostname === "localhost") {
+//     if (req.port === "3000") {
+//       basePath = "/pene";
+//     } else if (req.port === "4000") {
+//       basePath = "/lecho"; // Cambiar a la ruta deseada
+//     }
+//   }
+//   req.basePath = basePath;
+//   next();
+// });
 
 // Variables conexion BD
 let mysql = require("mysql");
@@ -53,7 +65,7 @@ const interfazDirectivo = {
 }; 
 
 let usuarioActivo = 600;
-let periodoActual = "";
+let periodoActual = ["2023-Q4","2023-Q3","2023-Q2","2023-Q1"];
 
 // Variables PDFKit (Generar reportes)
 const PDFDocument = require("pdfkit");
@@ -228,10 +240,10 @@ app.get("/foto/:idUsuario", async (req, res) => {
   }
 });
 
-
-app.get("/buzon/Detalles/", async (req, res) => {
+app.get("/descargarEvidencia/:idEvidencia", async (req, res) => {
+  const idEvidencia = req.params.idEvidencia;
   const result = await conexionAsync(
-    `SELECT nombre, archivo FROM EVIDENCIA WHERE id_evidencia = 2`
+    `SELECT nombre, archivo FROM EVIDENCIA WHERE id_evidencia = ${idEvidencia}`
   );
 
   if (result.length > 0) {
@@ -852,19 +864,7 @@ app.post("/generar-acta", async (req, res) => {
 //     doc.end();
 //   });
 
-// Definir la ruta base dependiendo del localhost
-app.use((req, res, next) => {
-  let basePath = "";
-  if (req.hostname === "localhost") {
-    if (req.port === "3000") {
-      basePath = "/pene";
-    } else if (req.port === "4000") {
-      basePath = "/lecho"; // Cambiar a la ruta deseada
-    }
-  }
-  req.basePath = basePath;
-  next();
-});
+
 
 // generador de pagina de inicio
 // app.get('/inicio', (req, res) => {
@@ -872,6 +872,7 @@ app.use((req, res, next) => {
 // });
 
 // generador de pagina de inicio
+
 app.get("", (req, res) => {
   res.redirect("/inicio");
 });
@@ -1190,46 +1191,104 @@ app.get("/miperfil", async (req, res) => {
 
 app.get("/buzon", async (req, res) => {
   try {
-    const id_grupo = await conexionAsync(`SELECT grupo_id, rol
-        FROM PARTICIPACION
+    const id_grupo = await conexionAsync(`SELECT p.grupo_id, u.rol as rol_u, p.rol as rol_p
+        FROM PARTICIPACION P
+        INNER JOIN USUARIO U ON U.identificacion = P.usuario_id
         WHERE usuario_id = ${usuarioActivo};`);
-
-    if (id_grupo[0].rol == 'P') {
-      try {
-        const propuestasPC = await conexionAsync(`SELECT 
-        U.nombre AS nombre, 
-        PP.*,
-        SUM(PA.presupuesto) AS presupuesto
-    FROM 
-        USUARIO U
-        INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
-        INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-        INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
-        INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
-        LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
-    WHERE 
-        G.id_grupo = ${id_grupo[0].grupo_id}
-        AND PP.estado = 'C'
-    GROUP BY
-        PP.id_PP;`);
-        const evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
-            FROM USUARIO U 
+    if (id_grupo[0].rol_u == 'directivo'){
+        if (id_grupo[0].rol_p == 'P') {
+          const propuestasPCT = await conexionAsync(`SELECT 
+            U.nombre AS nombre, 
+            PP.*,
+            SUM(PA.presupuesto) AS presupuesto
+        FROM 
+            USUARIO U
+            INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
+            INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+            INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+            INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+            LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+        WHERE 
+            PP.estado = 'D'
+        GROUP BY
+            PP.id_PP;`);
+            const propuestasPC = await conexionAsync(`SELECT 
+            U.nombre AS nombre, 
+            PP.*,
+            SUM(PA.presupuesto) AS presupuesto
+        FROM 
+            USUARIO U
             INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
             INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-            INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
-            INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
-            INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
-            WHERE G.id_grupo = ${id_grupo[0].grupo_id};`);
-    
-        res.send(interfazPadrino.creadorDePaginaBuzon(propuestasPC,evidencias));
-      } catch (error) {
-        console.error("Error:", error);
-        res.status(500).send("Error en la consulta a la base de datos");
+            INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+            INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+            LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+        WHERE 
+            G.id_grupo = ${id_grupo[0].grupo_id}
+            AND PP.estado = 'C'
+        GROUP BY
+            PP.id_PP;`);
+            const evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
+                FROM USUARIO U 
+                INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+                INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+                INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
+                INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
+                INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
+                WHERE G.id_grupo = ${id_grupo[0].grupo_id};`);
+        
+            res.send(interfazDirectivo.creadorDePaginaBuzonCoach(propuestasPC,evidencias,propuestasPCT));
+        }else{
+          const propuestasPCT = await conexionAsync(`SELECT 
+              U.nombre AS nombre, 
+              PP.*,
+              SUM(PA.presupuesto) AS presupuesto
+          FROM 
+              USUARIO U
+              INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
+              INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+              INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+              INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+              LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+          WHERE 
+              PP.estado = 'D' 
+          GROUP BY
+              PP.id_PP;`);
+          res.send(interfazDirectivo.creadorDePaginaBuzon(propuestasPCT));
+        }
+  }else{
+        if (id_grupo[0].rol_p == 'P') {
+          const propuestasPC = await conexionAsync(`SELECT 
+          U.nombre AS nombre, 
+          PP.*,
+          SUM(PA.presupuesto) AS presupuesto
+      FROM 
+          USUARIO U
+          INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+          INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+          INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+          INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+          LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+      WHERE 
+          G.id_grupo = ${id_grupo[0].grupo_id}
+          AND PP.estado = 'C'
+      GROUP BY
+          PP.id_PP;`);
+          const evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
+              FROM USUARIO U 
+              INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+              INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+              INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
+              INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
+              INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
+              WHERE G.id_grupo = ${id_grupo[0].grupo_id};`);
+      
+          res.send(interfazPadrino.creadorDePaginaBuzon(propuestasPC,evidencias));
+      }else{
+        
+        res.send(interfazColaborador.creadorDePaginaBuzon());
       }
-    }else{
-       res.send(interfazColaborador.creadorDePaginaBuzon());
-    }
-    
+  }
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error en la consulta a la base de datos");
@@ -1463,10 +1522,81 @@ app.post("/agregarActividadPropuesta/:id_PP", async (req, res) => {
   }
 });
 
+app.post("/denegarPropuestaDirectivo/:id_PP", async (req, res) => {
+  let id_propuesta = req.params.id_PP
+
+  try {
+    // Realiza la actualización en la base de datos
+    await conexionAsync(`
+          UPDATE PROPUESTA_P
+          SET
+            estado = 'C'
+            WHERE id_PP = ${id_propuesta};`);
+
+    // Genera la página después de la actualización exitosa
+    res.redirect("/buzon");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error en la consulta a la base de datos");
+  }
+});
+
+app.post("/aprobarPropuestaDirectivo/:id_PP", async (req, res) => {
+  let id_propuesta = req.params.id_PP
+
+  try {
+    // Realiza la actualización en la base de datos
+    let id_planCarrera = await conexionAsync(`
+          SELECT PC.id_plancarrera
+          FROM PLANCARRERA PC 
+          INNER JOIN PROPUESTA_P PP ON PP.id_plancarrera = PC.id_plancarrera  
+          WHERE id_PP = ${id_propuesta};`);
+
+    let propuesta_p = await conexionAsync(`
+          SELECT *
+          FROM PROPUESTA_P PP   
+          WHERE id_PP = ${id_propuesta};`);
+
+    let propuesta_a = await conexionAsync(`
+          SELECT *
+          FROM PROPUESTA_A PA   
+          WHERE id_PP = ${id_propuesta};`);
+          
+          await conexionAsync(`
+          UPDATE PLANCARRERA PC 
+          SET
+            estado = 'C'
+            WHERE id_PP = ${id_propuesta};`);
+    
+    // Genera la página después de la actualización exitosa
+    res.redirect("/buzon");
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error en la consulta a la base de datos");
+  }
+}); 
+
+app.post("/buzon/Detalles/VistaDirectivo/:id_PP", async (req, res) => {
+  const id_PP = req.params.id_PP;
+  try {
+    const propuestaExistente = await conexionAsync(`SELECT *
+        FROM PROPUESTA_P PP
+        WHERE id_PP = ${id_PP};`);
+
+    const actividadesPropuestas = await conexionAsync(`SELECT *
+        FROM PROPUESTA_A
+        WHERE id_PP = ${id_PP}`);
+
+    res.send(interfazDirectivo.creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistente));
+
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error en la consulta a la base de datos");
+  }
+});
 //proximamente
 // app.get("/descargarEvidencia/:idEvidencia", async(req,res)=>{
 
-  
 // });
 // 
 // /actualizarActividadPropuesta/:id_PA
@@ -1729,8 +1859,13 @@ app.get("/mi-plan-carrera", async (req, res) => {
   }
 });
 
-app.get("/ajustes", (req, res) => {
-  res.send(interfazColaborador.creadorDePaginasAjustes());
+app.get("/ajustes", async (req, res) => {
+
+  competitivo = await conexionAsync(
+    `SELECT competitivo FROM USUARIO WHERE identificacion = ${usuarioActivo}`
+  )
+  console.log("Metodo get",competitivo)
+  res.send(interfazColaborador.creadorDePaginasAjustes(competitivo));
 });
 
 // Ruta POST para manejar la actualización de los ajustes
@@ -1803,7 +1938,7 @@ app.post("/cambiar/ajustes", upload.single("imagen"), async (req, res) => {
 
         console.log("Perfil actualizado en la base de datos");
         // Genera la página de ajustes después de la actualización exitosa
-        res.send(interfazColaborador.creadorDePaginasAjustes());
+        res.redirect("/ajustes");
       });
     });
   } else {
@@ -1829,7 +1964,7 @@ app.post("/cambiar/ajustes", upload.single("imagen"), async (req, res) => {
       console.log("Perfil actualizado en la base de datos");
 
       // Genera la página de ajustes después de la actualización exitosa
-      res.send(interfazColaborador.creadorDePaginasAjustes());
+      res.redirect("/ajustes");
     });
   }
 });
@@ -1901,8 +2036,20 @@ app.get("/logro/:nombre", async (req, res) => {
     `SELECT * FROM medalla WHERE id_plancarrera = '${planCarrera[0].id_planCarrera}';`
   );
 
+
+
   res.send(interfazColaborador.creadorDePaginasMedallas(logros, nombre));
 });
+
+app.get("/agregarAlPefil/:idMedalla", async (req, res) => {
+  const idMedalla = req.params.idMedalla;
+  const medallas = await conexionAsync(`select medalla_1,medalla_2,medalla_3 from usuario where identificacion = ${usuarioActivo}`);
+  
+  await conexionAsync(`update Usuario set medalla_1 = ${idMedalla} , medalla_2 = ${medallas[0].medalla_1},medalla_3=${medallas[0].medalla_2} where identificacion = ${usuarioActivo}`);
+
+  res.send("alo")
+});
+
 
 app.get("/logros-eliminar", (req, res) => {
   res.send(interfazColaborador.creadorDePaginasLogrosEliminar());
@@ -1918,7 +2065,7 @@ app.get("/logros-actuales-eliminar", (req, res) => {
 
 app.get('/logros-custom', async (req, res) => {
 
-  const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera
+  const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera,U.medalla_1,U.medalla_2,U.medalla_3
   FROM USUARIO U
   JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
   JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera

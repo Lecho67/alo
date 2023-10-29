@@ -161,12 +161,12 @@ function creadorDePaginasMiGrupo(miGrupo) {
           <nav class="templatemo-left-nav">          
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
               <li><a href="/grupos"class="active"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
               
               <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
   
@@ -240,112 +240,149 @@ function creadorDePaginasMiGrupo(miGrupo) {
   return page;
 }
 // FALTA SER DINAMICA GRUPOS
-function creadorDePaginasGrupos(Miembrosgrupos,grupos) {
+function creadorDePaginasGrupos(Miembrosgrupos, grupos) {
   let res = "";
   grupos.forEach((grupo) => {
     const miembros = Miembrosgrupos.filter((miembro) => miembro.id_grupo === grupo.id_grupo);
 
-    res += `<div class="templatemo-content-container">
-      <div class="templatemo-content-widget white-bg col-2">
-        <div class="media margin-bottom-30">
-          <div class="media-left padding-right-25">
-            <a href="#">
-              <img class="media-object groupimgcircle templatemo-img-bordered " src="/imagen/${grupo.id_grupo}" alt="">
-            </a>
+    res += `
+      
+        <div class="templatemo-content-widget white-bg col-2">
+          <div class="media margin-bottom-30">
+            <div class="media-left padding-right-25">
+              <a href="#">
+                <img class="media-object groupimgcircle templatemo-img-bordered " src="/imagen/${grupo.id_grupo}" alt="">
+              </a>
+            </div>
+            <div class="media-body">
+              <h2 class="media-heading text-uppercase blue-text">${grupo.nombre}</h2>
+            </div>        
           </div>
-          <div class="media-body">
-            <h2 class="media-heading text-uppercase blue-text">${grupo.nombre}</h2>
-          </div>        
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                ${miembros.map((miembro) => `
+                  <tr>
+                    <td><div class="circle ${miembro.RolParticipacion === 'P' ? 'pink-bg' : 'blue-bg'}"></div></td>
+                    <td>${miembro.Nombre}</td>
+                    <td>${miembro.PorcentajeCompletitud}%</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          </div>             
         </div>
-        <div class="table-responsive">
-          <table class="table">
-            <tbody>
-              ${miembros.map((miembro) => `
-                <tr>
-                  <td><div class="circle ${miembro.RolParticipacion === 'P' ? 'pink-bg' : 'blue-bg'}"></div></td>
-                  <td>${miembro.Nombre}</td>
-                  <td>${miembro.PorcentajeCompletitud}%</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>             
-      </div>
-    </div>`;
+      
+    `;
   });
-  const npage = `<!DOCTYPE html>
+
+  const npage = `
+    <!DOCTYPE html>
     <html lang="en">
-     <head>
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">  
-      <title>Visual Admin Dashboard - Maps</title>
-      <meta name="description" content="">
-      <meta name="author" content="templatemo">
-      <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-      <link href="estilos/css/font-awesome.min.css" rel="stylesheet">
-      <link href="estilos/css/bootstrap.css" rel="stylesheet">
-      <link href="estilos/css/templatemo-style.css" rel="stylesheet">
-    </head>
-    <body>
-      <div class="templatemo-flex-row">
-        <div class="templatemo-sidebar">
-          <header class="templatemo-site-header">
-            <h1>Vortex Bird</h1>  
-          </header>
-          <div class="profile-photo-container">
-            <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-          </div>
-          <div class="mobile-menu-icon">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <title>Visual Admin Dashboard - Maps</title>
+        <meta name="description" content="">
+        <meta name="author" content="templatemo">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+        <link href="estilos/css/font-awesome.min.css" rel="stylesheet">
+        <link href="estilos/css/bootstrap.css" rel="stylesheet">
+        <link href="estilos/css/templatemo-style.css" rel="stylesheet">
+      </head>
+      <body>
+        <div class="templatemo-flex-row">
+          <div class="templatemo-sidebar">
+            <header class="templatemo-site-header">
+              <h1>Vortex Bird</h1>  
+            </header>
+            <div class="profile-photo-container">
+              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
+            </div>
+            <div class="mobile-menu-icon">
               <i class="fa fa-bars"></i>
             </div>
-          <nav class="templatemo-left-nav">          
             <nav class="templatemo-left-nav">          
               <ul>
                 <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
-    
+                <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
                 <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
-                  
                 <li><a href="grupos" class="active"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
-                
-                <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-    
+                <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br>Empresa</a></li>
                 <li><a href="/clasificaciones"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                
                 <li><a href="mislogros"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-  
                 <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-    
                 <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-    
               </ul>  
             </nav>
-          </nav>
-        </div>
-        <div class="templatemo-content col-1 light-gray-bg">
-          <div class="templatemo-top-nav-container">
-            <div class="row">
-              <nav class="templatemo-top-nav col-lg-12 col-md-12"style="margin-left: 35%;">
-                <ul class="text-uppercase">
-                  <li><a href="" class="active">Todos</a></li>
-                  <li><a href="/migrupo">Mi Grupo</a></li>
-                </ul>  
-              </nav>
+          </div>
+          <div class="templatemo-content col-1 light-gray-bg">
+            <div class="templatemo-top-nav-container">
+              <div class="row">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 35%;">
+                  <ul class="text-uppercase">
+                    <li><a href="" class="active">Todos</a></li>
+                    <li><a href="/migrupo">Mi Grupo</a></li>
+                  </ul>  
+                </nav>
+              </div>
+            </div>
+          <div class="templatemo-content-container">
+            ${res}      
+            <div class="templatemo-content-widget white-bg col-2">
+              <details>
+                <summary>
+                  <h2>Crear nuevo grupo</h2>
+                </summary>
+                <br>
+                <div>
+                  <form action="Crearnuevogrupodecolab">
+                    <select name="padrino" id="padrino">
+                      <option value="">Selecciona un padrino</option>
+                      <!-- Opciones para padrino -->
+                    </select>
+                    <br><br>
+                    <select name="colaborador" id="colaborador">
+                      <option value="">Selecciona el colaborador 1</option>
+                      <!-- Opciones para colaborador 1 -->
+                    </select>
+                    <br><br>
+                    <select name="colaborador" id="colaborador">
+                      <option value="">Selecciona el colaborador 2</option>
+                      <!-- Opciones para colaborador 2 -->
+                    </select>
+                    <br><br>
+                    <select name="colaborador" id="colaborador">
+                      <option value="">Selecciona el colaborador 3</option>
+                      <!-- Opciones para colaborador 3 -->
+                    </select>
+                    <br><br>
+                    <select name="colaborador" id="colaborador">
+                      <option value="">Selecciona el colaborador 4</option>
+                      <!-- Opciones para colaborador 4 -->
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Crear">
+                  </form>
+                </div>
+                <br>
+              </details>
             </div>
           </div>
-        ${res}                  
-            <footer class="text-right">
-              <p>Copyright &copy; 2023 VortexBird Desing: InnovateU</p>
-            </footer>         
+          <footer class="text-right">
+          <p>Copyright &copy; 2023 VortexBird Design: InnovateU</p>
+        </footer> 
           </div>
         </div>
-      </div>
-    </body>
-    </html>`;
+        
+      </body>
+    </html>
+  `;
+
   return npage;
 }
+
 // Visualizacion del perfil de un usuario a
 function creadorDePaginasPerfil(usuarioPerfil) {
   const page = `<!DOCTYPE html>
@@ -390,12 +427,12 @@ function creadorDePaginasPerfil(usuarioPerfil) {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -482,7 +519,7 @@ function creadorDePaginasPerfil(usuarioPerfil) {
                             }</p>
                           </div>
                           <div class="col-1 col-lg-6 col-md-12">
-                            <div id="pie_chart_div" class="templatemo-chart-small"></div> 
+                            
                           </div>
                         </div>
     
@@ -506,41 +543,7 @@ function creadorDePaginasPerfil(usuarioPerfil) {
     
         <script src="https://www.google.com/jsapi"></script> 
         <script>
-    
-          
-          /* Google Chart 
-          -------------------------------------------------------------------*/
-          // Load the Visualization API and the piechart package.
-          google.load('visualization', '1.0', {'packages':['corechart']});
-    
-          // Set a callback to run when the Google Visualization API is loaded.
-          google.setOnLoadCallback(drawChart); 
-          
-          // Callback that creates and populates a data table,
-          // instantiates the pie chart, passes in the data and
-          // draws it.
-          function drawChart() {
-    
-              // Create the data table.
-              var data = new google.visualization.DataTable();
-              data.addColumn('string', 'Topping');
-              data.addColumn('number', 'Slices');
-              data.addRows([
-                ['Completo', ${usuarioPerfil[0].PorcentajeCompletacion}],
-                ['Incompleto', ${
-                  100 - usuarioPerfil[0].PorcentajeCompletacion
-                }],
-              ]);
-    
-              // Set chart options
-              var options = {'width':500, 'height':250};
-    
-              // Instantiate and draw our chart, passing in some options.
-              var pieChart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
-              pieChart.draw(data, options);
-    
-          }
-          
+
         </script>
     
       </body>

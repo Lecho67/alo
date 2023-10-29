@@ -1,4 +1,4 @@
-function creadorDePaginasAjustes() {
+function creadorDePaginasAjustes(competitivo) {
     const page = `<!DOCTYPE html>
     <html lang="en">
       <head>
@@ -29,12 +29,12 @@ function creadorDePaginasAjustes() {
               <nav class="templatemo-left-nav">          
                 <ul>
                   <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
                   
                   <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
@@ -107,18 +107,10 @@ function creadorDePaginasAjustes() {
                       </select>
                     </div> -->
                     <div class="col-lg-6 col-md-6 form-group">                  
-                        <!-- <div class="templatemo-block margin-bottom-5">
-                          <input type="checkbox" name="emailOptions" id="c1" value="new" checked> 
-                          <label for="c1" class="font-weight-400"><span></span>Enviar un email cuando inicie sesión.</label> 
-                        </div>
                         <div class="templatemo-block margin-bottom-5">
-                          <input type="checkbox" name="emailOptions" id="c2" value="weekly">
-                          <label for="c2" class="font-weight-400"><span></span>Notificaciones</label> 
-                        </div> -->
-                        <div class="templatemo-block margin-bottom-5">
-                          <input type="checkbox" name="clasificacion" id="c3" value="1">
-                          <label for="c3" class="font-weight-400"><span></span>Modo clasificación</label> 
-                        </div>
+                        <input type="checkbox" name="clasificacion" id="c3" value="1" ${competitivo[0].competitivo==1 ? 'checked' : ''} class="custom-checkbox">
+                        <label for="c3" class="font-weight-400 checkbox-label"><span></span>Modo clasificación</label> 
+                      </div>
                     </div> 
                   </div>
                   <div class="form-group text-right">
