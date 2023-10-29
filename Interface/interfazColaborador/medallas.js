@@ -99,15 +99,15 @@ function creadorDePaginasLogros(logros) {
                       <h2 class="templatemo-inline-block">Insignias en perfil:</h2><hr>
                     <div class="templatemo-flex-row flex-content-row">
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="images/Insignias/7g.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_1}" alt="">
     
                       </div>
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="images/Insignias/god.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_2}" alt="">
     
                       </div>
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="images/Insignias/decepticon.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_3}" alt="">
     
                       </div>
                     </div>
@@ -454,15 +454,15 @@ function creadorDePaginasMedallas(logros, nombre) {
                       <h2 class="templatemo-inline-block">Insignias en perfil:</h2><hr>
                     <div class="templatemo-flex-row flex-content-row">
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="/images/Insignias/7g.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_1}" alt="">
     
                       </div>
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="/images/Insignias/god.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_2}" alt="">
     
                       </div>
                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                        <img class="insignia-mostrada-en-perfil" src="/images/Insignias/decepticon.png" alt="">
+                        <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${logros[0].medalla_3}" alt="">
     
                       </div>
                     </div>
@@ -1351,7 +1351,8 @@ function creadorDePaginasLogrosActualesEliminar() {
 function creadorDePaginasLogrosCustom(medallas){
   let cont = 0;
   let res = "<tr>";
-  medallas.forEach((element,index)=>{
+  
+  medallas.filter((element,index)=>element.tipo =="C").forEach((element,index)=>{
     cont+=1;
     res+=`
   <td>
@@ -1471,15 +1472,15 @@ function creadorDePaginasLogrosCustom(medallas){
                                   <hr>
                                   <div class="templatemo-flex-row flex-content-row">
                                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/7g.png" alt="">
+                                          <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_1}" alt="">
   
                                       </div>
                                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/god.png" alt="">
+                                          <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_2}" alt="">
   
                                       </div>
                                       <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                          <img class="insignia-mostrada-en-perfil" src="images/Insignias/decepticon.png" alt="">
+                                          <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_3}" alt="">
   
                                       </div>
                                   </div>
@@ -1534,7 +1535,7 @@ function creadorDePaginasSelectorLogrosCustom(medallas,medalla){
   let cont = 0;
   let res = "<tr>";
   console.log(medalla)
-  medallas.forEach((element,index)=>{
+  medallas.filter(x=>x.tipo=='C').forEach((element,index)=>{
     cont+=1;
     res+=`
   <td>
@@ -1650,15 +1651,15 @@ function creadorDePaginasSelectorLogrosCustom(medallas,medalla){
                     <h2 class="templatemo-inline-block">Insignias en perfil:</h2><hr>
                   <div class="templatemo-flex-row flex-content-row">
                     <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="/images/Insignias/7g.png" alt="">
+                      <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_1}" alt="">
   
                     </div>
                     <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="/images/Insignias/god.png" alt="">
+                      <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_2}" alt="">
   
                     </div>
                     <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                      <img class="insignia-mostrada-en-perfil" src="/images/Insignias/decepticon.png" alt="">
+                      <img class="insignia-mostrada-en-perfil" src="/fotoMedalla/${medallas[0].medalla_3}" alt="">
   
                     </div>
                   </div>

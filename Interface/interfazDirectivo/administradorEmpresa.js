@@ -141,15 +141,15 @@ function creadorDePaginaBuzon(propuestas) {
     <link href="/estilos/css/templatemo-style.css" rel="stylesheet">
     <script>
         function enviarSolicitudAprobar(element) {
-            enviarSolicitud('POST', '/aprobarPropuesta/' + element);
+            enviarSolicitud('POST', '/aprobarPropuestaDirectivo/' + element);
         }
 
         function enviarSolicitudDenegar(element) {
-            enviarSolicitud('POST', '/denegarPropuesta/' + element);
+            enviarSolicitud('POST', '/denegarPropuestaDirectivo/' + element);
         }
 
         function enviarSolicitudDetalles(element) {
-            enviarSolicitud('POST', '/buzon/Detalles/' + element);
+            enviarSolicitud('POST', '/buzon/Detalles/VistaDirectivo/' + element);
         }
         function enviarSolicitud(method, url) {
           var form = document.createElement('form');
@@ -197,39 +197,7 @@ function creadorDePaginaBuzon(propuestas) {
       </div>
       <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-content-container">
-          <div class="templatemo-content-widget no-padding ">
-          <h1 class="mi-titulo">Buzon Coach</h1>
-            <details class="ajustar-detalles-claro">
-              <summary style="text-align: center;">
-                <h4 style="text-align: center;">Solicitudes De Plan Carrera</h4>
-                <span style="text-align: left;" class="icon">▼</span>
-              </summary>
-              <div class="panel panel-default table-responsive">
-              <table class="table table-striped table-bordered templatemo-user-table">
-                <thead>
-                  <tr>
-                    <td>Nombre Del Proponente</td>
-                    <td>Título Plan Carrera</td>
-                    <td>Objetivo</td>
-                    <td>Presupuesto</td>
-                    <td>Descripcion</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                    ${res}   
-                </tbody>
-              </table>  
-            </div> 
-            </details>
-
-              <div class="panel panel-default table-responsive">
-              </div>            
-            
-                                    
-          </div> 
+        
           <div class="templatemo-content-widget no-padding ">
           <h1 class="mi-titulo">Buzon Directivo</h1>
           <details class="ajustar-detalles-claro">
@@ -303,9 +271,9 @@ function creadorDePaginaBuzonCoach(propuestas,evidencias,propuestasgenerales) {
     <td>${element.objetivo}</td>
     <td>$${element.presupuesto}</td>
     <td>${element.descripcion}</td>
-    <td><a href="javascript:void(0);" onclick="enviarSolicitudAprobar(${element.id_PP})" class="templatemo-edit-btn">Aprobar</a></td>
-    <td><a href="javascript:void(0);" onclick="enviarSolicitudDenegar(${element.id_PP})" class="templatemo-edit-btn">Denegar</a></td>
-    <td><a href="javascript:void(0);" onclick="enviarSolicitudDetalles(${element.id_PP})" class="templatemo-link" id="Detalles">Detalles</a></td>
+    <td><a href="javascript:void(0);" onclick="enviarSolicitudAprobarD(${element.id_PP})" class="templatemo-edit-btn">Aprobar</a></td>
+    <td><a href="javascript:void(0);" onclick="enviarSolicitudDenegarD(${element.id_PP})" class="templatemo-edit-btn">Denegar</a></td>
+    <td><a href="javascript:void(0);" onclick="enviarSolicitudDetallesD(${element.id_PP})" class="templatemo-link" id="Detalles">Detalles</a></td>
   </tr>`;
   });
 
@@ -324,16 +292,27 @@ function creadorDePaginaBuzonCoach(propuestas,evidencias,propuestasgenerales) {
     <link href="/estilos/css/bootstrap.css" rel="stylesheet">
     <link href="/estilos/css/templatemo-style.css" rel="stylesheet">
     <script>
-        function enviarSolicitudAprobar(element) {
+        function enviarSolicitudAprobarD(element) {
             enviarSolicitud('POST', '/aprobarPropuestaDirectivo/' + element);
         }
 
-        function enviarSolicitudDenegar(element) {
+        function enviarSolicitudDenegarD(element) {
             enviarSolicitud('POST', '/denegarPropuestaDirectivo/' + element);
         }
 
-        function enviarSolicitudDetalles(element) {
+        function enviarSolicitudDetallesD(element) {
             enviarSolicitud('POST', '/buzon/Detalles/VistaDirectivo/' + element);
+        }
+        function enviarSolicitudAprobar(element) {
+          enviarSolicitud('POST', '/aprobarPropuesta/' + element);
+        }
+
+        function enviarSolicitudDenegar(element) {
+            enviarSolicitud('POST', '/denegarPropuesta/' + element);
+        }
+
+        function enviarSolicitudDetalles(element) {
+            enviarSolicitud('POST', '/buzon/Detalles/' + element);
         }
         function enviarSolicitud(method, url) {
           var form = document.createElement('form');
