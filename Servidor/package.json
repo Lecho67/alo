@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "file-mime-type": "^2.0.0",
     "file-type": "^18.5.0",
@@ -20,6 +21,7 @@
     "mysql2": "^3.6.2",
     "pdfkit": "^0.11.0",
     "pdfkit-table": "^0.1.99",
-    "sequelize": "^6.33.0"
+    "sequelize": "^6.33.0",
+    "socket.io": "^4.7.2"
   }
 }
