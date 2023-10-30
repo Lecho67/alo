@@ -789,80 +789,60 @@ app.get("/videos/:videoName", (req, res) => {
   
   
   app.post("/subirFotoGrupo/:idGrupo", upload.single("file"), async (req, res) => {
-    const idGrupo = req.params.idGrupo;
-    const nombreGrupo = req.body.nombre;
-    const file = req.file;
-    const fecha = new Date();
-    const fechaSQL = fecha.toISOString().split("T")[0];
-
-    const id_grupo = await conexionAsync(`SELECT grupo_id
-    FROM PARTICIPACION
-    WHERE usuario_id = ${usuarioActivo};`);
-
-    const migrupo =
-      await conexionAsync(`SELECT U.nombre AS Nombre,U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo,G.id_grupo AS id_grupo, P.rol AS RolParticipacion,
-    (
-    SELECT COALESCE(SUM(M.puntos), 0)
-    FROM MEDALLA M JOIN PLANCARRERA PC ON M.id_plancarrera = PC.id_plancarrera 
-    WHERE PC.id_usuario = U.identificacion) AS PuntosLogroTotales,
-    (
-        (
-        SELECT COALESCE(SUM(A.unidades), 0)
-        FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
-        WHERE PC.id_usuario = U.identificacion AND A.estado = true
-        ) / 72 * 100
-    ) AS PorcentajeCompletitud
-    FROM USUARIO U
-    INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
-    INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-    ORDER BY PorcentajeCompletitud DESC`);
-
-    let miGrupo = migrupo.filter((x) => x.id_grupo == id_grupo[0].grupo_id);
-
-    if (!file) {
-      return res.status(400).send("No se ha proporcionado ningún archivo.");
-    }
-    const nombreArchivo = file.originalname;
-
-    fs.readFile(file.path, (err, data) => {
-      if (err) {
-        return res.status(500).send("Error al leer el archivo.");
+    try {
+      const idGrupo = req.params.idGrupo;
+      const nombreGrupo = req.body.nombre;
+      const file = req.file;
+      const fecha = new Date();
+      const fechaSQL = fecha.toISOString().split("T")[0];
+  
+      const id_grupo = await conexionAsync('SELECT grupo_id FROM PARTICIPACION WHERE usuario_id = ?', [usuarioActivo]);
+  
+      const migrupo = await conexionAsync(`
+        SELECT U.nombre AS Nombre, U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo,
+          G.nombre AS NombreGrupo, G.id_grupo AS id_grupo, P.rol AS RolParticipacion,
+          (SELECT COALESCE(SUM(M.puntos), 0) FROM MEDALLA M JOIN PLANCARRERA PC ON M.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion) AS PuntosLogroTotales,
+          ((SELECT COALESCE(SUM(A.unidades), 0) FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
+          WHERE PC.id_usuario = U.identificacion AND A.estado = true) / 72 * 100) AS PorcentajeCompletitud
+        FROM USUARIO U
+        INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
+        INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+        ORDER BY PorcentajeCompletitud DESC`, []);
+  
+      let miGrupo = migrupo.filter((x) => x.id_grupo == id_grupo[0].grupo_id);
+  
+      if (!file) {
+        return res.status(400).send("No se ha proporcionado ningún archivo.");
       }
-
-      const blob = data;
+  
+      const nombreArchivo = file.originalname;
+  
+      const data = fs.readFileSync(file.path);
+      const blob = data.toString("base64");
+  
       if (nombreGrupo) {
-        const sql =
-          "UPDATE Grupo SET imagen = ?, nombre = ? WHERE id_grupo = ?";
-        db.query(sql, [blob, nombreGrupo, idGrupo], (err, result) => {
-          if (err) {
-            return res
-              .status(500)
-              .send("Error al insertar en la base de datos.");
-          }
-
-          fs.unlinkSync(file.path);
-
-          console.log("Evidencia subida y registrada en la base de datos");
-          res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
-        });
+        const sql = "UPDATE Grupo SET imagen = ?, nombre = ? WHERE id_grupo = ?";
+        await conexionAsync(sql, [blob, nombreGrupo, idGrupo]);
+  
+        fs.unlinkSync(file.path);
+  
+        console.log("Evidencia subida y registrada en la base de datos");
+        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
       } else {
-        sql = "UPDATE Grupo SET imagen = ? WHERE id_grupo = ?";
-        db.query(sql, [blob, idGrupo], (err, result) => {
-          if (err) {
-            return res
-              .status(500)
-              .send("Error al insertar en la base de datos.");
-          }
-
-          fs.unlinkSync(file.path);
-
-          console.log("Evidencia subida y registrada en la base de datos");
-          res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
-        });
+        const sql = "UPDATE Grupo SET imagen = ? WHERE id_grupo = ?";
+        await conexionAsync(sql, [blob, idGrupo]);
+  
+        fs.unlinkSync(file.path);
+  
+        console.log("Evidencia subida y registrada en la base de datos");
+        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
       }
-    });
-  }
-  );
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Error interno del servidor");
+    }
+  });
+  
 
   app.get("/imagen/:idGrupo", async (req, res) => {
     const idGrupo = req.params.idGrupo;

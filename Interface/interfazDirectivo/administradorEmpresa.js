@@ -74,7 +74,7 @@ function creadorDePaginaEmpresa(usuario) {
           <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 20%;">
                   <ul class="text-uppercase">
                     <li><a href="/empresa"class="active">Integrantes de la Empresa</a></li>
                     <li><a href="/empresaPlanCarrera">Planes Carrera de los Integrantes</a></li>
