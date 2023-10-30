@@ -156,11 +156,6 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
             
                                     
           </div>
-          <div class="templatemo-content-widget no-padding ">
-           
-          
-          
-          </div>
         </?div>
       </div>
     </div>

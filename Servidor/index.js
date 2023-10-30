@@ -1565,8 +1565,30 @@ app.post("/aprobarPropuestaDirectivo/:id_PP", async (req, res) => {
           await conexionAsync(`
           UPDATE PLANCARRERA PC 
           SET
-            estado = 'C'
-            WHERE id_PP = ${id_propuesta};`);
+            titulo = '${propuesta_p[0].titulo}',
+            objetivo = '${propuesta_p[0].objetivo}',
+            descripcion = '${propuesta_p[0].descripcion}'
+            WHERE id_plancarrera = ${id_planCarrera[0].id_plancarrera};`);
+          await conexionAsync(`
+            DELETE FROM ACTIVIDAD
+            WHERE id_plancarrera = ${id_planCarrera[0].id_plancarrera};`);
+    
+    propuesta_a.forEach(async (element) => {
+      var fechaISO = element.fecha_inicio.toISOString().slice(0, 10);
+      var fechaISO1 = element.fecha_fin.toISOString().slice(0, 10);
+      await conexionAsync(`
+      INSERT INTO ACTIVIDAD(titulo,descripcion,unidades,estado,tipo,presupuesto,fecha_inicio,fecha_fin,id_plancarrera) 
+      values('${element.titulo}','${element.descripcion}',${element.unidades},False,${element.tipo},${element.presupuesto},'${fechaISO}','${fechaISO1}',${id_planCarrera[0].id_plancarrera});`);
+    });
+
+    await conexionAsync(`
+    DELETE FROM PROPUESTA_A
+    WHERE id_PP = ${id_propuesta};`);
+
+    await conexionAsync(`
+    DELETE FROM PROPUESTA_P
+    WHERE id_PP = ${id_propuesta};`);
+
     
     // Genera la página después de la actualización exitosa
     res.redirect("/buzon");
@@ -2014,7 +2036,11 @@ app.get("/mislogros", async (req, res) => {
       ` ;`
   );
   let logros = await conexionAsync(
-    `SELECT * FROM medalla WHERE id_plancarrera = '${planCarrera[0].id_planCarrera}';`
+    `SELECT M.nombre, M.foto, M.descripcion,M.tipo,M.puntos, U.medalla_1, U.medalla_2, U.medalla_3
+    FROM USUARIO U
+    INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+    INNER JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
+    WHERE U.identificacion = ${usuarioActivo};`
   );
   res.send(interfazColaborador.creadorDePaginasLogros(logros));
 });
@@ -2032,8 +2058,12 @@ app.get("/logro/:nombre", async (req, res) => {
       usuarioActivo +
       ` ;`
   );
-  const logros = await conexionAsync(
-    `SELECT * FROM medalla WHERE id_plancarrera = '${planCarrera[0].id_planCarrera}';`
+  let logros = await conexionAsync(
+    `SELECT M.nombre, M.foto, M.descripcion,M.tipo,M.puntos, U.medalla_1, U.medalla_2, U.medalla_3
+    FROM USUARIO U
+    INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+    INNER JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
+    WHERE U.indentificacion = ${usuarioActivo};`
   );
 
 
@@ -2069,7 +2099,7 @@ app.get('/logros-custom', async (req, res) => {
   FROM USUARIO U
   JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
   JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-  WHERE U.identificacion =${usuarioActivo} AND M.tipo = 'C'`);
+  WHERE U.identificacion =${usuarioActivo} `);
   res.send(interfazColaborador.creadorDePaginasLogrosCustom(medallas));
 
 });
@@ -2136,11 +2166,11 @@ app.get('/SeleccionLogro/:idMedalla', async (req, res) => {
   JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
   WHERE M.id_medalla =${idMedalla}  AND M.tipo = 'C'`);
  
-  const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera
+  const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera,U.medalla_1,U.medalla_2,U.medalla_3
   FROM USUARIO U
   JOIN PLANCARRERA PC ON U.identificacion = PC .id_usuario
   JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-  WHERE U.identificacion =${usuarioActivo} AND M.tipo = 'C'`);
+  WHERE U.identificacion =${usuarioActivo}`);
   res.send(interfazColaborador.creadorDePaginasSelectorLogrosCustom(medallas,medalla));
 
 
@@ -2159,6 +2189,7 @@ app.get('/fotoMedalla/:idMedalla', async (req, res) => {
       res.status(404).send('No se encontró la imagen.');
   }
 });
+
 
 app.get("/logros-custom-eliminar", (req, res) => {
   res.send(interfazColaborador.creadorDePaginasLogrosCustomEliminar());
