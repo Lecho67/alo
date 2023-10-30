@@ -698,11 +698,11 @@ app.get("/videos/:videoName", (req, res) => {
       const usuarios = await conexionAsync(`SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, G.nombre AS Grupo, P.rol AS CargoEnParticipacion, PC.titulo AS TituloPC 
       FROM USUARIO U 
       INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id 
-      INNER JOIN GRUPO G ON P.grupo_id = G.id_grupon 
+      INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo 
       INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion`, []);
       
       if (RolUsuario[0].rol === "directivo") {
-        res.send(interfazDirectivo.creadorDePaginaEmpresacreadorDePaginaVisualizacionP(usuarios));
+        res.send(interfazDirectivo.creadorDePaginaVisualizacionP(usuarios));
       } else {
         res.redirect('/empresa');
       }
