@@ -696,7 +696,7 @@ function creadorDePaginaVisualizacionP(usuario) {
       <td>${element.Rol}</td>
       <td>${element.Cargo}</td>
       <td>${element.TituloPC}</td>
-      <td><a href="/planCarrera/${element.Id_PC}">Ver Perfil</a></td>
+      <td><a href="/planCarrera/${element.Identificacion}">Ver Plan Carrera</a></td>
     </tr>`;
     
   });
@@ -802,7 +802,6 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
   let res = "";
   let aux = "";
   let aux1 = "";
-  let aux2 = "";
 
 
   actividades.forEach((element,i) => {
@@ -822,24 +821,14 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
         }
         if (actividades[i].EstadoActividad == 1) {
           aux1="Completada";
-          aux2=``;
         }else{
           aux1="En Curso";
-          aux2=`<div class="templatemo-block margin-bottom-5">
-          <input type="checkbox" name="Completada" id="completada" value="weekly">
-          <label for="completada" class="font-weight-400"><span></span>Completada</label> 
-        </div>`
         }
         res+= `<div class="templatemo-widget-content templatemo-flex-row">
         <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
           <h2>Actividad ${i+1}: ${actividades[i].TituloActividad}</h2><br><br>
           <h2>Tipo: ${aux}</h2><br><br>
           <h2>Unidades: ${actividades[i].UnidadesActividad}</h2><br><br>
-          <form action="/subirEvidencia/${actividades[i].IdActividad}" method="post" enctype="multipart/form-data">
-      <input type="file" name="evidencia" multiple>
-      <input type="hidden" name="actividadId" value="${actividades[i].IdActividad}">
-      <button type="submit" class="evidenciaalo">Subir Evidencia</button>
-    </form>
         </div>
         <div class="col-1" style="text-align: center; margin: 10px;"> 
           <h2>Descripción:</h2><br>
@@ -849,7 +838,6 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
           <h2>Fecha Inicio: ${fechaComoString}</h2><br><br>
           <h2>Fecha Final: ${fechaComoString1}</h2><br><br>
           <h2>Estado: ${aux1}</h2><br><br>
-          ${aux2}
         </div>
       </div>
       <hr>`
@@ -869,9 +857,9 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
       https://templatemo.com/tm-455-visual-admin
       -->
       <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
-      <link href="estilos/css/font-awesome.min.css" rel="stylesheet">
-      <link href="estilos/css/bootstrap.css" rel="stylesheet">
-      <link href="estilos/css/templatemo-style.css" rel="stylesheet">
+      <link href="/estilos/css/font-awesome.min.css" rel="stylesheet">
+      <link href="/estilos/css/bootstrap.css" rel="stylesheet">
+      <link href="/estilos/css/templatemo-style.css" rel="stylesheet">
       
       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -889,30 +877,30 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
             <h1>Vortex Bird</h1>  
           </header>
           <div class="profile-photo-container">
-            <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
+            <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
           </div>
           <div class="mobile-menu-icon">
               <i class="fa fa-bars"></i>
             </div>
             <nav class="templatemo-left-nav">          
               <ul>
-                <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+                <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
 
-                <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
+                <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
-                <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
+                <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                   
-                <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
+                <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
                 
-                <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
+                <li><a href="/empresa"  class="active"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
     
-                <li><a href="clasificaciones" id="link"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
+                <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
                 
-                <li><a href="mislogros"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
+                <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
                 
-                <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
+                <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
     
-                <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
+                <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
     
               </ul>  
             </nav>
@@ -921,10 +909,9 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
         <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
             <div class="row">
-              <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left:40%;">
+              <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left:35%;">
                 <ul class="text-uppercase">
-                  <li><a href=""class="active">Mi Plan Carrera</a></li>
-                  <li><a href="propuesta">Proponer</a></li>
+                  <li><a href=""class="active">Plan Carrera de ${usuarioPlanCarrera[0].NombreUsuario} ${usuarioPlanCarrera[0].ApellidoUsuario}</a></li>
                 </ul>  
               </nav> 
             </div>
@@ -956,157 +943,7 @@ function creadorDePaginaVisualizacionPlanC(usuarioPlanCarrera,planCarrera,activi
                       </div>
                     </div>
                     <hr>
-                    ${res}
-                    <details>
-                <summary>
-                  <h2>Grupos de actividades</h2>
-                  <span class="icon">▼</span>
-                </summary>
-                <br>
-                <!-- ------ -->
-                <div>
-                  <h2>De Retorno</h2><br>
-                    <details>
-                      <summary>
-                        <p>Cambiar Nombre</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <input type="text" name="nombre" placeholder="Nombre">
-                          <input type="submit" value="Cambiar">
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                    <details>
-                      <summary>
-                        <p>Actividades</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <ul>
-                            <li>
-                              <input type="checkbox" name="actividad1"> conferencia liderazgo
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad2"> leer clean code
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad3"> taller liderazgo
-                            </li>
-                            <br>  
-                            <input type="submit" value="Actualizar">
-                          </ul>
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                  <a href="#">Eliminar</a>
-                </div>
-                <hr>
-                <!-- ------ -->
-                <div>
-                  <h2>Conferencias</h2><br>
-                    <details>
-                      <summary>
-                        <p>Editar</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <input type="text" name="nombre" placeholder="Nombre">
-                          <input type="submit" value="Cambiar">
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                    <details>
-                      <summary>
-                        <p>Actividades</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <ul>
-                            <li>
-                              <input type="checkbox" name="actividad1"> conferencia liderazgo
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad2"> leer clean code
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad3"> taller liderazgo
-                            </li>
-                            <br>  
-                            <input type="submit" value="Actualizar">
-                          </ul>
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                    <a href="#">Eliminar</a>
-                </div>
-                <hr>
-                <!-- ------ -->
-                <div>
-                  <h2>Cursos</h2><br>
-                    <details>
-                      <summary>
-                        <p>Editar</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <input type="text" name="nombre" placeholder="Nombre">
-                          <input type="submit" value="Cambiar">
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                    <details>
-                      <summary>
-                        <p>Actividades</p>
-                      </summary>
-                      <div>
-                        <form action="cambiarnombregrupo">
-                          <ul>
-                            <li>
-                              <input type="checkbox" name="actividad1"> conferencia liderazgo
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad2"> leer clean code
-                            </li>
-                            <li>
-                              <input type="checkbox" name="actividad3"> taller liderazgo
-                            </li>
-                            <br>  
-                            <input type="submit" value="Actualizar">
-                          </ul>
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                    <a href="#">Eliminar</a>
-                </div>
-                <hr>
-                <!-- ------ -->
-                <div>
-
-                    <details>
-                      <summary>
-                        <h2>Crear nuevo grupo</h2>
-                      </summary>
-                      <br>
-                      <div>
-                        <form action="Crearnuevogrupo">
-                          <input type="text" name="nombre" placeholder="Nombre">
-                          <input type="submit" value="Crear">
-                        </form>
-                      </div>
-                      <br>
-                    </details>
-                </div>
-                <hr>
-                <br>
-              </details>            
-              
+                ${res}                        
             </div>        
           </div>
           <footer class="text-right">

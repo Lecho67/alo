@@ -122,7 +122,7 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left:40%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left:30%;">
                   <ul class="text-uppercase">
                     <li><a href=""class="active">Mi Plan Carrera</a></li>
                     <li><a href="propuesta">Proponer</a></li>

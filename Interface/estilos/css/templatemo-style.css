@@ -169,11 +169,16 @@ footer { padding: 15px; }
 }
 
 .marco-insignia-en-perfil {
-	padding: 3%; border-radius: 50%;
+	position: relative;
+	padding: 3%; border-radius: 50px;
 	background-color: rgba(191, 189, 189, 0.70);
 	text-align: center;
 	margin: auto;
+	min-height: 130px;
 	width: 33.5%;
+	border: #b4b4b4;
+	border-style: solid;
+	border-width: 3px;
 }
 .tabla-logros {
 	margin: auto;
