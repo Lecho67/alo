@@ -428,19 +428,19 @@ function creadorDePaginasPerfil(usuarioPerfil) {
                 <ul>
                   <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
       
                   <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                     
                   <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
                   
-                  <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
+                  <li><a href="/empresa" class="active"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
       
                   <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
                   
                   <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
                   
-                  <li><a href="/miperfil" class="active"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
+                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
       
                   <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
       
@@ -453,9 +453,7 @@ function creadorDePaginasPerfil(usuarioPerfil) {
           <div class="row">
             <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 25%;">
               <ul class="text-uppercase">
-                <li><a href=""class="active">Mi Perfil</a></li>
-                <li><a href="mi-plan-carrera">Mi Plan Carrera</a></li>
-                <li><a href="propuesta">Proponer</a></li>
+                <li><a class="active">Perfil de ${usuarioPerfil[0].Nombre} ${usuarioPerfil[0].Apellido}</a></li>
               </ul>  
             </nav> 
           </div>
@@ -476,15 +474,15 @@ function creadorDePaginasPerfil(usuarioPerfil) {
                           }" class="imgcircle_perfil" ><br><br>
                             <div class="templatemo-flex-row flex-content-row">
                               <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                <img class="insignia-mostrada-en-perfil-2" src="/images/Insignias/7g.png" alt="">
+                                <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_1}" alt="">
             
                               </div>
                               <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                <img class="insignia-mostrada-en-perfil-2" src="/images/Insignias/god.png" alt="">
+                                <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_2}" alt="">
             
                               </div>
                               <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                                <img class="insignia-mostrada-en-perfil-2" src="/images/Insignias/decepticon.png" alt="">
+                                <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_3}" alt="">
             
                               </div>
                             </div>

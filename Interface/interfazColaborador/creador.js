@@ -1,5 +1,6 @@
 function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendientes) {
   let res = "";
+  let res1 = `<tr><td colspan="4" style="text-align: center;">MODO COMPETITIVO DESACTIVADO</td></tr>`;
 
   actividadesPendientes.forEach((element, i) => {
     var dia = actividadesPendientes[i].fecha_fin.getDate();
@@ -26,6 +27,40 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
     </div>
   </li>`;
   });
+
+  if (usuario[0].competitivo == 1) {
+    res1 = `                        
+  <tr>
+    <td>1.</td>
+    <td>${top5Colab[0].NombreUsuario}</td>
+    <td>${top5Colab[0].ApellidoUsuario}</td>
+    <td>${top5Colab[0].SumaPuntosMedallas}</td>
+  </tr>
+  <tr>
+    <td>2.</td>
+    <td>${top5Colab[1].NombreUsuario}</td>
+    <td>${top5Colab[1].ApellidoUsuario}</td>
+    <td>${top5Colab[1].SumaPuntosMedallas}</td>
+  </tr>
+  <tr>
+    <td>3.</td>
+    <td>${top5Colab[2].NombreUsuario}</td>
+    <td>${top5Colab[2].ApellidoUsuario}</td>
+    <td>${top5Colab[2].SumaPuntosMedallas}</td>
+  </tr>
+  <tr>
+    <td>4.</td>
+    <td>${top5Colab[3].NombreUsuario}</td>
+    <td>${top5Colab[3].ApellidoUsuario}</td>
+    <td>${top5Colab[3].SumaPuntosMedallas}</td>
+  </tr>
+  <tr>
+    <td>5.</td>
+    <td>${top5Colab[4].NombreUsuario}</td>
+    <td>${top5Colab[4].ApellidoUsuario}</td>
+    <td>${top5Colab[4].SumaPuntosMedallas}</td>
+  </tr>`
+  }
 
   const npage = `<!DOCTYPE html>
   <html lang="en">
@@ -120,8 +155,8 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
               <div class="col-1">
                 <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
                   <div class="panel-heading templatemo-position-relative"><h2 class="text-uppercase">Top 5 Colaboradores: </h2></div>
-                  <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
+                  <div class="panel panel-default table-responsive">
+                    <table class="table table-striped table-bordered" style="margin-bottom: 20px;">
                       <thead>
                         <tr>
                           <td>Puesto Nro</td>
@@ -131,36 +166,7 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1.</td>
-                          <td>${top5Colab[0].NombreUsuario}</td>
-                          <td>${top5Colab[0].ApellidoUsuario}</td>
-                          <td>${top5Colab[0].SumaPuntosMedallas}</td>
-                        </tr>
-                        <tr>
-                          <td>2.</td>
-                          <td>${top5Colab[1].NombreUsuario}</td>
-                          <td>${top5Colab[1].ApellidoUsuario}</td>
-                          <td>${top5Colab[1].SumaPuntosMedallas}</td>
-                        </tr>
-                        <tr>
-                          <td>3.</td>
-                          <td>${top5Colab[2].NombreUsuario}</td>
-                          <td>${top5Colab[2].ApellidoUsuario}</td>
-                          <td>${top5Colab[2].SumaPuntosMedallas}</td>
-                        </tr>
-                        <tr>
-                          <td>4.</td>
-                          <td>${top5Colab[3].NombreUsuario}</td>
-                          <td>${top5Colab[3].ApellidoUsuario}</td>
-                          <td>${top5Colab[3].SumaPuntosMedallas}</td>
-                        </tr>
-                        <tr>
-                          <td>5.</td>
-                          <td>${top5Colab[4].NombreUsuario}</td>
-                          <td>${top5Colab[4].ApellidoUsuario}</td>
-                          <td>${top5Colab[4].SumaPuntosMedallas}</td>
-                        </tr>                    
+                        ${res1}
                       </tbody>
                     </table>    
                   </div>                          
@@ -183,7 +189,7 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
             <div class="panel panel-default templatemo-content-widget white-bg no-padding templatemo-overflow-hidden">
               <div class="panel-heading-red templatemo-position-relative"><h2 class="text-uppercase">Top 3 Grupos: </h2></div>
               <div class="table-responsive">
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered" style="margin-bottom: 20px;">
                   <thead>
                     <tr>
                       <td>Puesto Nro</td>
@@ -765,15 +771,15 @@ function creadorDePaginasMiPerfil(usuarioPerfil) {
                         <img src="/foto/usuario" class="imgcircle_perfil" ><br><br>
                           <div class="templatemo-flex-row flex-content-row">
                             <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                              <img class="insignia-mostrada-en-perfil-2" src="images/Insignias/7g.png" alt="">
+                              <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_1}" alt="">
           
                             </div>
                             <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                              <img class="insignia-mostrada-en-perfil-2" src="images/Insignias/god.png" alt="">
+                              <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_2}" alt="">
           
                             </div>
                             <div class="templatemo-content-widget.no-padding marco-insignia-en-perfil">
-                              <img class="insignia-mostrada-en-perfil-2" src="images/Insignias/decepticon.png" alt="">
+                              <img class="insignia-mostrada-en-perfil-2" src="/fotoMedalla/${usuarioPerfil[0].medalla_3}" alt="">
           
                             </div>
                           </div>

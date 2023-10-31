@@ -43,6 +43,8 @@ function creadorDePaginaClasificaciones(clasificacionGlobal) {
                   <li><a href="/inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
       
                   <li><a href="/buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
+
+                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
                     
                   <li><a href="/grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
 
@@ -184,7 +186,7 @@ function creadorDePaginaSinClasificaciones() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td colspan="8" style="text-align: center;">Desactivado</td></tr>
+                      <tr><td colspan="8" style="text-align: center;">MODO COMPETITIVO DESACTIVADO</td></tr>
                     </tbody>
                   </table>    
                 </div>                          

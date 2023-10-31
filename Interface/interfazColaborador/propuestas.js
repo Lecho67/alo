@@ -533,9 +533,8 @@ function sinPropuestas() {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 25%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
                   <ul class="text-uppercase">
-                    <li><a href="miperfil">Mi Perfil</a></li>
                     <li><a href="mi-plan-carrera">Mi Plan Carrera</a></li>
                     <li><a href=""class="active">Proponer</a></li>
                   </ul>  

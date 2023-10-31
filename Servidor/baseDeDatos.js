@@ -1,15 +1,16 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
+require('dotenv').config(); // Carga variables de entorno desde un archivo .env
 
-function conexionMetodo(query) {
+function conexionMetodo(query, values) {
   return new Promise((resolve, reject) => {
-    const conexion = mysql.createConnection({
-      host: 'localhost',
-      user: 'root',
-      password: '123456789',
-      database: 'InnovateU'
+    const connection = mysql.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME
     });
 
-    conexion.connect((err) => {
+    connection.connect((err) => {
       if (err) {
         reject(err); // Rechazar la promesa si hay un error en la conexión
       } else {
@@ -17,13 +18,12 @@ function conexionMetodo(query) {
       }
     });
 
-    conexion.query(query, function (err, lista) {
+    connection.execute(query, values, (err, results) => {
       if (err) {
         reject(err); // Rechazar la promesa si hay un error en la consulta
       } else {
-        // console.log(lista);
-        conexion.end();
-        resolve(lista); // Resolver la promesa con los datos obtenidos
+        connection.end();
+        resolve(results); // Resolver la promesa con los datos obtenidos
       }
     });
   });
