@@ -92,7 +92,7 @@ function creadorDePaginasAjustes(competitivo) {
                           </summary>
                           <br>
                           <div style="display: grid; place-items: center;">
-                            <input type="file" name="imagen" placeholder="Ingresa una imagen">
+                            <input type="file" name="imagen" placeholder="Ingresa una imagen" accept="image/*">
                           </div>
                         </details>
                       </div>

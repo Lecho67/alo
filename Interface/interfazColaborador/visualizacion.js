@@ -1,8 +1,21 @@
-function creadorDePaginasMiGrupo(miGrupo) {
+function creadorDePaginasMiGrupo(miGrupo,misGrupos,i) {
   let padrino = miGrupo.find((x) => x.RolParticipacion == "P");
   miGrupo = miGrupo.filter((x) => x.RolParticipacion !== "P");
   const incompletitud = 100 - padrino.PorcentajeCompletitud;
   let colaboradoresHtml = "";
+  let ul = "";
+  misGrupos.forEach((grupo, index) => {
+    if (i == index) {
+      ul += `
+      <li><a href="/migrupo/${index}" class="active">${grupo.nombre}</a></li>
+  `;
+    }else{
+      ul += `
+      <li><a href="/migrupo/${index}">${grupo.nombre}</a></li>
+  `;
+    }
+
+  });
   miGrupo.forEach((colaborador, index) => {
     colaboradoresHtml += `
       <div class="col-1 templatemo-overflow-hidden">
@@ -162,7 +175,7 @@ function creadorDePaginasMiGrupo(miGrupo) {
             <ul>
               <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
 
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
+              <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
   
               <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                 
@@ -184,10 +197,10 @@ function creadorDePaginasMiGrupo(miGrupo) {
         <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
             <div class="row">
-              <nav class="templatemo-top-nav col-lg-12 col-md-12"style="margin-left: 35%;">
+              <nav class="templatemo-top-nav col-lg-12 col-md-12">
                 <ul class="text-uppercase">
                   <li><a href="/grupos" >Todos</a></li>
-                  <li><a href="/migrupo" class="active">Mi Grupo</a></li>
+                  ${ul}
                 </ul>  
               </nav>
             </div>
@@ -239,9 +252,15 @@ function creadorDePaginasMiGrupo(miGrupo) {
   </html>`;
   return page;
 }
-// FALTA SER DINAMICA GRUPOS
-function creadorDePaginasGrupos(Miembrosgrupos, grupos) {
+
+function creadorDePaginasGrupos(Miembrosgrupos, grupos, misGrupos) {
   let res = "";
+  let ul = "";
+  misGrupos.forEach((grupo, index) => {
+    ul += `
+        <li><a href="/migrupo/${index}">${grupo.nombre}</a></li>
+    `;
+  });
   grupos.forEach((grupo) => {
     const miembros = Miembrosgrupos.filter((miembro) => miembro.id_grupo === grupo.id_grupo);
 
@@ -283,7 +302,7 @@ function creadorDePaginasGrupos(Miembrosgrupos, grupos) {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <title>Visual Admin Dashboard - Maps</title>
+        <title>Plan Carrera - Grupos</title>
         <meta name="description" content="">
         <meta name="author" content="templatemo">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -320,10 +339,10 @@ function creadorDePaginasGrupos(Miembrosgrupos, grupos) {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 35%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="" class="active">Todos</a></li>
-                    <li><a href="/migrupo">Mi Grupo</a></li>
+                    ${ul}
                   </ul>  
                 </nav>
               </div>
@@ -334,36 +353,96 @@ function creadorDePaginasGrupos(Miembrosgrupos, grupos) {
               <details>
                 <summary>
                   <h2>Crear nuevo grupo</h2>
+                  <span class="icon">▼</span>
                 </summary>
                 <br>
                 <div>
                   <form action="Crearnuevogrupodecolab">
+                  <hr>
+                  <h2>Padrino:</h2>
+                  <br>
                     <select name="padrino" id="padrino">
                       <option value="">Selecciona un padrino</option>
                       <!-- Opciones para padrino -->
                     </select>
-                    <br><br>
-                    <select name="colaborador" id="colaborador">
-                      <option value="">Selecciona el colaborador 1</option>
-                      <!-- Opciones para colaborador 1 -->
-                    </select>
-                    <br><br>
-                    <select name="colaborador" id="colaborador">
-                      <option value="">Selecciona el colaborador 2</option>
-                      <!-- Opciones para colaborador 2 -->
-                    </select>
-                    <br><br>
-                    <select name="colaborador" id="colaborador">
-                      <option value="">Selecciona el colaborador 3</option>
-                      <!-- Opciones para colaborador 3 -->
-                    </select>
-                    <br><br>
-                    <select name="colaborador" id="colaborador">
-                      <option value="">Selecciona el colaborador 4</option>
-                      <!-- Opciones para colaborador 4 -->
-                    </select>
-                    <br><br>
-                    <input type="submit" value="Crear">
+                    <hr>
+                    <br>
+                    <h2>Colaboradores:</h2>
+                    <br>
+
+                      <h3> • Juanestebane</h3>
+                      <details class="ajustar-detalles-claro">
+                        <summary>
+                          <h4>Editar</h4>
+                          </summary>
+                        <div>
+                          <br>
+                          <p><a href="">Eliminar Del Grupo</a></p>
+                          <br>
+                          <form action="Actualizarcolaborador">
+                            <select name="colaborador" id="colaborador">
+                              <option value="">Selecciona el colaborador 1</option>
+                              <!-- Opciones para colaborador 1 -->
+                            </select>
+                            <input type="submit" value="Actualizar">
+                          </form>
+                        </div>
+                      </details>
+                      <br>
+
+                      <h3> • Infopablo</h3>
+                      <details class="ajustar-detalles-claro">
+                        <summary>
+                          <h4>Editar</h4>
+                          </summary>
+                        <div>
+                          <br>
+                          <p><a href="">Eliminar Del Grupo</a></p>
+                          <br>
+                          <form action="Actualizarcolaborador">
+                            <select name="colaborador" id="colaborador">
+                              <option value="">Selecciona el colaborador 1</option>
+                              <!-- Opciones para colaborador 1 -->
+                            </select>
+                            <input type="submit" value="Actualizar">
+                          </form>
+                        </div>
+                      </details>
+                      <br>
+
+                      <h3> • Esteban</h3>
+                      <details class="ajustar-detalles-claro">
+                        <summary>
+                          <h4>Editar</h4>
+                          </summary>
+                        <div>
+                          <br>
+                          <p><a href="">Eliminar Del Grupo</a></p>
+                          <br>
+                          <form action="Actualizarcolaborador">
+                            <select name="colaborador" id="colaborador">
+                              <option value="">Selecciona el colaborador 1</option>
+                              <!-- Opciones para colaborador 1 -->
+                            </select>
+                            <input type="submit" value="Actualizar">
+                          </form>
+                        </div>
+                      </details>
+                      <br>
+
+
+                    <hr>
+                    <h2>Agregar Colaborador:</h2>
+                    <br>
+                    <form action="Agregarcolaborador">
+                      <select name="colaborador" id="colaborador">
+                        <option value="">Selecciona el colaborador</option>
+                        <!-- Opciones para colaborador 1 -->
+                      </select>
+                      <input type="submit" value="Agregar">
+                    </form>
+                    <hr>
+                    <input type="submit" value="Crear Nuevo Grupo">
                   </form>
                 </div>
                 <br>
@@ -451,7 +530,7 @@ function creadorDePaginasPerfil(usuarioPerfil) {
           <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
           <div class="row">
-            <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 25%;">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
               <ul class="text-uppercase">
                 <li><a class="active">Perfil de ${usuarioPerfil[0].Nombre} ${usuarioPerfil[0].Apellido}</a></li>
               </ul>  

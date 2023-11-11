@@ -74,7 +74,7 @@ function creadorDePaginaEmpresa(usuario) {
           <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 20%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="/empresa"class="active">Integrantes de la Empresa</a></li>
                     <li><a href="/empresaPlanCarrera">Planes Carrera de los Integrantes</a></li>
@@ -473,7 +473,7 @@ function creadorDePaginaBuzonCoach(propuestas,evidencias,propuestasgenerales) {
 function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistente) {
   let res = "";
   let aux = "";
-  let unit = 0;
+  let unit = 72;
   let ur = 0;
   let estado = "";
 
@@ -753,7 +753,7 @@ function creadorDePaginaVisualizacionP(usuario) {
         <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 20%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="/empresa">Integrantes de la Empresa</a></li>
                     <li><a href=""class="active">Planes Carrera de los Integrantes</a></li>

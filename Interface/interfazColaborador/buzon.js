@@ -62,7 +62,7 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
       <div class="templatemo-flex-row">
         <div class="templatemo-sidebar">
           <header class="templatemo-site-header">
-            <h1>Vortex Bird</h1>  
+            <h1>VortexBird</h1>  
           </header>
           <div class="profile-photo-container">
             <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 

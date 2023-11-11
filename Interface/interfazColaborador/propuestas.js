@@ -231,22 +231,34 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
         <title>Plan Carrera - Mi plan Carrera</title>
         <meta name="description" content="">
         <meta name="author" content="templatemo">
-        <!-- 
-        Visual Admin Template
-        https://templatemo.com/tm-455-visual-admin
-        -->
+
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
         <link href="estilos/css/font-awesome.min.css" rel="stylesheet">
         <link href="estilos/css/bootstrap.css" rel="stylesheet">
         <link href="estilos/css/templatemo-style.css" rel="stylesheet">
         
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script>    
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+        <script>
+        function formatCurrency(input) {
+            console.log('La función formatCurrency se está ejecutando');
+            // Obtener el valor sin formato
+            let value = input.value.replace(/[^\d.]/g, '');
+        
+            // Formatear el valor como moneda
+            if (value !== '') {
+                value = parseFloat(value).toFixed(2);
+                value = '$' + value.replace(/\\d(?=(\\d{3})+\\.)/g, '$&,');
+            }
+        
+            // Establecer el valor formateado en el campo
+            input.value = value;
+        }
+        
+      
+          
           function eliminarActividad(idActividad) {
             document.getElementById("myForm").action = "/eliminarActividad/"+idActividad;
             // Envía el formulario
@@ -367,7 +379,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 25%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="mi-plan-carrera">Mi Plan Carrera</a></li>
                     <li><a href=""class="active">Proponer</a></li>
@@ -416,7 +428,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                     <div class="templatemo-widget-content templatemo-flex-row">
                       <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
                         <label for="inputLastName">Nombre De La Actividad</label>
-                        <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre"><br> 
+                        <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" required><br> 
                         <label for="inputLastName">Tipo de Actividad</label><br>
                         <select id="TipoActividad" name="TipoActividad">
                           <option>Retorno A Vortex Bird</option>
@@ -425,7 +437,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                         <label for="UnidadesActividad">Unidades:</label>
                         <input type="number" class="form-control" id="UnidadesActividad" name="UnidadesActividad" placeholder="Ingrese el número de unidades que usa esta actividad" min="1" max="${
                           72 - unit
-                        }">
+                        }" required>
                       </div>
     
                       <div class="col-1" style="text-align: center; margin: 10px;"> 
@@ -435,11 +447,11 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
     
                       <div class=" col-1" style="text-align: center; margin-top: 10px;">
                         <label for="inputLastName">Fecha Inicio</label>
-                        <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" placeholder="Fecha Inicio"><br><br>
+                        <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" placeholder="Fecha Inicio" required><br><br>
                         <label for="inputLastName">Fecha Finalización</label>
-                        <input type="date" class="form-control" id="FechaFinalizacion" name ="FechaFinalizacion" placeholder="Fecha Finalización"><br><br>
+                        <input type="date" class="form-control" id="FechaFinalizacion" name ="FechaFinalizacion" placeholder="Fecha Finalización" required><br><br>
                         <label for="inputLastName">Presupuesto de la Actividad</label>
-                        <input type="number" class="form-control" id="Presupuesto" name ="Presupuesto" placeholder="Ingrese el presupuesto en COP" min="0" max="1000000000"><br>
+                        <input type="number" class="form-control" id="Presupuesto" name="Presupuesto" placeholder="Ingrese el presupuesto en COP" pattern="^\\d+(\\.\\d{1,2})?$" required><br>
                         ${buttonNueva}
                       </div>
                     </div>
@@ -533,7 +545,7 @@ function sinPropuestas() {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="mi-plan-carrera">Mi Plan Carrera</a></li>
                     <li><a href=""class="active">Proponer</a></li>

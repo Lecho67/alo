@@ -14,6 +14,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../Interface")));
 
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    // Verifica si el error es causado por un archivo demasiado grande
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ error: 'Se subió un archivo demasiado grande' });
+    }
+    // Maneja otros errores de Multer según tus necesidades
+  }
+  next(err);
+});
 
 
 // Variables conexion BD
@@ -57,16 +67,16 @@ const interfazPadrino = {
 };  
 const interfazDirectivo = {
   ...require("../Interface/interfazDirectivo/administradorEmpresa.js"),
-}; 
+};
 
-let usuarioActivo = 600;
-let periodoActual = ["2023-Q4","2023-Q3","2023-Q2","2023-Q1"];
+let usuarioActivo = 1;
+let periodoActual = ["2023-Q3","2023-Q2","2023-Q1"];
 
 // Variables PDFKit (Generar reportes)
 const PDFDocument = require("pdfkit");
 const pdfkitTable = require("pdfkit-table");
 
-// Variables Multer (Manejo de Blobs)
+// Variables Multer (Manejo de Blobs) 
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -705,10 +715,8 @@ app.get("/videos/:videoName", (req, res) => {
     
     try {
       const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [usuarioActivo]);
-      const usuarios = await conexionAsync(`SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, G.nombre AS Grupo, P.rol AS CargoEnParticipacion, PC.titulo AS TituloPC 
-      FROM USUARIO U 
-      INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id 
-      INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo 
+      const usuarios = await conexionAsync(`SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, PC.titulo AS TituloPC 
+      FROM USUARIO U
       INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion`, []);
       
       if (RolUsuario[0].rol === "directivo") {
@@ -733,9 +741,7 @@ app.get("/videos/:videoName", (req, res) => {
                 SELECT COALESCE(SUM(A.unidades), 0)
                 FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
                 WHERE PC.id_usuario = U.identificacion AND A.estado = true
-                ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ` +
-            usuario +
-            ` ;`
+                ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ?`,[usuario]
         );
         const planCarrera = await conexionAsync(
           `SELECT
@@ -743,9 +749,7 @@ app.get("/videos/:videoName", (req, res) => {
                 PC.objetivo AS ObjetivoPlanCarrera,
                 PC.descripcion AS DescripcionPlanCarrera
                 FROM PLANCARRERA PC
-                WHERE PC.id_usuario = ` +
-            usuario +
-            ` ;`
+                WHERE PC.id_usuario = ?`,[usuario]
         );
         const actividades = await conexionAsync(
           `SELECT
@@ -759,9 +763,7 @@ app.get("/videos/:videoName", (req, res) => {
                 A.estado AS EstadoActividad
                 FROM ACTIVIDAD A
                 INNER JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
-                WHERE PC.id_usuario = ` +
-            usuario +
-            `;`
+                WHERE PC.id_usuario =?`,[usuario]
         );
   
         res.send(
@@ -785,6 +787,7 @@ app.get("/videos/:videoName", (req, res) => {
 
   app.get("/grupos", async (req, res) => {
     try {
+      const misGrupos = await conexionAsync('SELECT G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [usuarioActivo]);
       const Miembrosgrupos =
         await conexionAsync(`SELECT U.nombre AS Nombre,U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo,G.id_grupo AS id_grupo, P.rol AS RolParticipacion,
           (
@@ -805,32 +808,31 @@ app.get("/videos/:videoName", (req, res) => {
 
           const grupos = await conexionAsync(`SELECT * FROM GRUPO`);
           console.log(Miembrosgrupos)
-      res.send(interfazColaborador.creadorDePaginasGrupos(Miembrosgrupos,grupos));
+      res.send(interfazColaborador.creadorDePaginasGrupos(Miembrosgrupos,grupos,misGrupos));
     } catch (error) {
       console.error("Error:", error);
       res.sendFile(path.join(__dirname, '../Interface/404.html'));
     }
   });
 
-  app.get("/migrupo", async (req, res) => {
+  app.get("/migrupo/:i", async (req, res) => {
+    let index = req.params.i;
     try { 
-      const id_grupo = await conexionAsync('SELECT grupo_id, rol FROM PARTICIPACION WHERE usuario_id = ?', [usuarioActivo]);
-  
+      const misGrupos = await conexionAsync('SELECT P.grupo_id, G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [usuarioActivo]);
       const migrupo = await conexionAsync(`SELECT U.nombre AS Nombre, U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo, G.id_grupo AS id_grupo, P.rol AS RolParticipacion, (SELECT COALESCE(SUM(M.puntos), 0) FROM MEDALLA M JOIN PLANCARRERA PC ON M.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion) AS PuntosLogroTotales, (((SELECT COALESCE(SUM(A.unidades), 0) FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion AND A.estado = true) / 72 * 100)) AS PorcentajeCompletitud FROM USUARIO U INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo ORDER BY PorcentajeCompletitud DESC`, []);
   
-      let miGrupo = migrupo.filter((x) => x.id_grupo == id_grupo[0].grupo_id);
+      let miGrupo = migrupo.filter((x) => x.id_grupo == misGrupos[index].grupo_id);
   
-      if (id_grupo[0].rol === 'P') {
-        res.send(interfazPadrino.creadorDePaginasMiGrupo(miGrupo));
+      if (misGrupos[index].rol === 'P') {
+        res.send(interfazPadrino.creadorDePaginasMiGrupo(miGrupo,misGrupos,index));
       } else {
-        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
+        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo,misGrupos,index));
       }
     } catch (error) {
       console.error("Error:", error);
       res.sendFile(path.join(__dirname, '../Interface/404.html'));
     }
   });
-  
 
   app.get("/grupo/:grupoId", async (req, res) => {
     try {
@@ -851,7 +853,6 @@ app.get("/videos/:videoName", (req, res) => {
       res.sendFile(path.join(__dirname, '../Interface/404.html'));
     }
   });
-  
   
   app.post("/subirFotoGrupo/:idGrupo", upload.single("file"), async (req, res) => {
     try {
@@ -877,7 +878,7 @@ app.get("/videos/:videoName", (req, res) => {
         fs.unlinkSync(file.path);
   
         console.log("Evidencia subida y registrada en la base de datos");
-        res.redirect("/migrupo")
+        res.redirect("/migrupo/0")
       } else {
         const sql = "UPDATE Grupo SET imagen = ? WHERE id_grupo = ?";
         await conexionAsync(sql, [blob, idGrupo]);
@@ -885,14 +886,13 @@ app.get("/videos/:videoName", (req, res) => {
         fs.unlinkSync(file.path);
   
         console.log("Evidencia subida y registrada en la base de datos");
-        res.redirect("/migrupo")
+        res.redirect("/migrupo/0")
       }
     } catch (error) {
       console.error("Error:", error);
       res.status(500).send("Error interno del servidor");
     }
-  });
-  
+  });  
 
   app.get("/imagen/:idGrupo", async (req, res) => {
     const idGrupo = req.params.idGrupo;
@@ -1055,8 +1055,7 @@ app.get("/videos/:videoName", (req, res) => {
     }
   });
 
-
-    app.get("/foto/usuario", async (req, res) => {
+  app.get("/foto/usuario", async (req, res) => {
       const result = await conexionAsync(
         `SELECT foto FROM Usuario where identificacion = ?`,[usuarioActivo]
       );
@@ -1068,9 +1067,9 @@ app.get("/videos/:videoName", (req, res) => {
       } else {
         res.status(404).send("No se encontró la imagen.");
       }
-    });
+  });
     
-    app.get("/foto/:idUsuario", async (req, res) => {
+  app.get("/foto/:idUsuario", async (req, res) => {
       const idUsuario = req.params.idUsuario;
       const result = await conexionAsync(
         `SELECT foto FROM Usuario where identificacion =?`,[idUsuario]
@@ -1083,7 +1082,7 @@ app.get("/videos/:videoName", (req, res) => {
       } else {
         res.status(404).send("No se encontró la imagen.");
       }
-    });
+  });
     
 
 //  PERFILES  //
@@ -1098,50 +1097,56 @@ app.get("/videos/:videoName", (req, res) => {
           INNER JOIN USUARIO U ON U.identificacion = P.usuario_id
           WHERE usuario_id = ?`, [usuarioActivo]);
       if (id_grupo[0].rol_u == 'directivo'){
-          if (id_grupo[0].rol_p == 'P') {
-            const propuestasPCT = await conexionAsync(`SELECT 
-              U.nombre AS nombre, 
-              PP.*,
-              SUM(PA.presupuesto) AS presupuesto
-          FROM 
-              USUARIO U
-              INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
-              INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-              INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
-              INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
-              LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
-          WHERE 
-              PP.estado = 'D'
-          GROUP BY
-              PP.id_PP;`);
-              const propuestasPC = await conexionAsync(`SELECT 
-              U.nombre AS nombre, 
-              PP.*,
-              SUM(PA.presupuesto) AS presupuesto
-          FROM 
-              USUARIO U
-              INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
-              INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-              INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
-              INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
-              LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
-          WHERE 
-              G.id_grupo = ?
-              AND PP.estado = 'C'
-          GROUP BY
-              PP.id_PP;`,[id_grupo[0].grupo_id]);
-              const evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
-                  FROM USUARIO U 
-                  INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
-                  INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-                  INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
-                  INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
-                  INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
-                  WHERE G.id_grupo = ?`,[id_grupo[0].grupo_id]);
+        let propuestasPC,evidencias,propuestasPCT = [];
+        for (const grupo of id_grupo) {
+            if (grupo.rol_p == 'P') {
+            
+              propuestasPCT = await conexionAsync(`SELECT 
+                U.nombre AS nombre, 
+                PP.*,
+                SUM(PA.presupuesto) AS presupuesto
+            FROM 
+                USUARIO U
+                INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id
+                INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+                INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+                INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+                LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+            WHERE 
+                PP.estado = 'D'
+            GROUP BY
+                PP.id_PP;`);
+                propuestasPC = await conexionAsync(`SELECT 
+                U.nombre AS nombre, 
+                PP.*,
+                SUM(PA.presupuesto) AS presupuesto
+            FROM 
+                USUARIO U
+                INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+                INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+                INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+                INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+                LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+            WHERE 
+                G.id_grupo = ?
+                AND PP.estado = 'C'
+            GROUP BY
+                PP.id_PP;`,[grupo.grupo_id]);
+                evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
+                    FROM USUARIO U 
+                    INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+                    INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+                    INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
+                    INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
+                    INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
+                    WHERE G.id_grupo = ?`,[grupo.grupo_id]);
+            
+                res.send(interfazDirectivo.creadorDePaginaBuzonCoach(propuestasPC,evidencias,propuestasPCT));
+                break;
+            }
+          }
           
-              res.send(interfazDirectivo.creadorDePaginaBuzonCoach(propuestasPC,evidencias,propuestasPCT));
-          }else{
-            const propuestasPCT = await conexionAsync(`SELECT 
+            propuestasPCT = await conexionAsync(`SELECT 
                 U.nombre AS nombre, 
                 PP.*,
                 SUM(PA.presupuesto) AS presupuesto
@@ -1157,39 +1162,42 @@ app.get("/videos/:videoName", (req, res) => {
             GROUP BY
                 PP.id_PP;`);
             res.send(interfazDirectivo.creadorDePaginaBuzon(propuestasPCT));
-          }
-    }else{
-          if (id_grupo[0].rol_p == 'P') {
-            const propuestasPC = await conexionAsync(`SELECT 
-            U.nombre AS nombre, 
-            PP.*,
-            SUM(PA.presupuesto) AS presupuesto
-        FROM 
-            USUARIO U
-            INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
-            INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-            INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
-            INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
-            LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
-        WHERE 
-            G.id_grupo = ?
-            AND PP.estado = 'C'
-        GROUP BY
-            PP.id_PP;`,[id_grupo[0].grupo_id]);
-            const evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
-                FROM USUARIO U 
-                INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
-                INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
-                INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
-                INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
-                INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
-                WHERE G.id_grupo = ?`,[id_grupo[0].id_grupo]);
-        
-            res.send(interfazPadrino.creadorDePaginaBuzon(propuestasPC,evidencias));
-        }else{
           
-          res.send(interfazColaborador.creadorDePaginaBuzon());
-        }
+    }else{
+      let propuestasPC,evidencias = [];
+      for (const grupo of id_grupo) {
+
+        if (grupo.rol_p == 'P') {
+          propuestasPC = await conexionAsync(`SELECT 
+          U.nombre AS nombre, 
+          PP.*,
+          SUM(PA.presupuesto) AS presupuesto
+      FROM 
+          USUARIO U
+          INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+          INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+          INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
+          INNER JOIN PROPUESTA_P PP ON PC.id_plancarrera = PP.id_plancarrera
+          LEFT JOIN PROPUESTA_A PA ON PP.id_PP = PA.id_PP
+      WHERE 
+          G.id_grupo = ?
+          AND PP.estado = 'C'
+      GROUP BY
+          PP.id_PP;`,[grupo.grupo_id]);
+          evidencias = await conexionAsync(`SELECT U.nombre AS nombreUsuario, A.titulo AS nombreActividad, E.*
+              FROM USUARIO U 
+              INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id AND P.rol = 'C'
+              INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo
+              INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion
+              INNER JOIN ACTIVIDAD A ON A.id_plancarrera = PC.id_plancarrera
+              INNER JOIN EVIDENCIA E ON E.id_actividad = A.id_actividad
+              WHERE G.id_grupo = ?`,[grupo.grupo_id]);
+      
+          res.send(interfazPadrino.creadorDePaginaBuzon(propuestasPC,evidencias));
+          break;
+      } 
+      }
+      res.send(interfazColaborador.creadorDePaginaBuzon());
     }
     } catch (error) {
       console.error("Error:", error);
@@ -1229,7 +1237,7 @@ app.get("/videos/:videoName", (req, res) => {
             SET
               titulo = ?,
               objetivo = ?,
-              descripcion = ?'
+              descripcion = ?
               WHERE id_PP = ?;`,[TituloPC,ObjetivoPC,DescripcionPC,id_PP]);
 
       // Genera la página después de la actualización exitosa
@@ -1278,7 +1286,7 @@ app.get("/videos/:videoName", (req, res) => {
             UPDATE PROPUESTA_P
             SET
               estado = 'D'
-              WHERE id_PP = ?`,[id_propuesta]);
+              WHERE id_PP = ? ;`,[id_propuesta]);
 
       // Genera la página después de la actualización exitosa
       res.redirect("/buzon");
@@ -1346,8 +1354,8 @@ app.get("/videos/:videoName", (req, res) => {
             tipo = ?,
             presupuesto = ?,
             fecha_inicio = ?,
-            fecha_fin = ?,
-            WHERE id_PA = ?;`,[titulo,descripcion,unidades,tipo,presupuesto,fecha_inicio,fecha_fin,id_PA]);
+            fecha_fin = ?
+            WHERE id_PA = ?`,[titulo,descripcion,unidades,tipo,presupuesto,fecha_inicio,fecha_fin,id_PA]);
 
       // Genera la página después de la actualización exitosa
         const propuestaExistente = await conexionAsync(`SELECT *
@@ -1498,6 +1506,7 @@ app.get("/videos/:videoName", (req, res) => {
       res.sendFile(path.join(__dirname, '../Interface/404.html'));
     }
   });
+
   app.get("/descargarEvidencia/:idEvidencia", async (req, res) => {
     const idEvidencia = req.params.idEvidencia;
     const result = await conexionAsync(

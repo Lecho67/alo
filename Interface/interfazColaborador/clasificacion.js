@@ -18,7 +18,7 @@ function creadorDePaginaClasificaciones(clasificacionGlobal) {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <title>Visual Admin Dashboard - Manage Users</title>
+        <title>Plan Carrera - Clasificaciones</title>
         <meta name="description" content="">
         <meta name="author" content="templatemo">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -66,7 +66,7 @@ function creadorDePaginaClasificaciones(clasificacionGlobal) {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="" class="active">Colaboradores</a></li>
                     <li><a href="clasificacionesGrupos">Grupos</a></li>
@@ -115,7 +115,7 @@ function creadorDePaginaSinClasificaciones() {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <title>Visual Admin Dashboard - Manage Users</title>
+        <title>Plan Carrera - Clasificaciones</title>
         <meta name="description" content="">
         <meta name="author" content="templatemo">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -161,7 +161,7 @@ function creadorDePaginaSinClasificaciones() {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="" class="active">Colaboradores</a></li>
                     <li><a href="clasificacionesGrupos">Grupos</a></li>
@@ -223,7 +223,7 @@ function creadorDePaginasClasificacionesGrupos(clasificacionesGrupos) {
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <title>Visual Admin Dashboard - Manage Users</title>
+        <title>Plan Carrera - Clasificaciones Grupos</title>
         <meta name="description" content="">
         <meta name="author" content="templatemo">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -269,7 +269,7 @@ function creadorDePaginasClasificacionesGrupos(clasificacionesGrupos) {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left: 30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="/clasificaciones">Colaboradores</a></li>
                     <li><a href=""class="active">Grupos</a></li>

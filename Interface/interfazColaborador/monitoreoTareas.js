@@ -37,7 +37,7 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
             <h2>Tipo: ${aux}</h2><br><br>
             <h2>Unidades: ${actividades[i].UnidadesActividad}</h2><br><br>
             <form action="/subirEvidencia/${actividades[i].IdActividad}" method="post" enctype="multipart/form-data">
-        <input type="file" name="evidencia" multiple>
+        <input type="file" name="evidencia">
         <input type="hidden" name="actividadId" value="${actividades[i].IdActividad}">
         <button type="submit" class="evidenciaalo">Subir Evidencia</button>
       </form>
@@ -122,7 +122,7 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12" style="margin-left:30%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href=""class="active">Mi Plan Carrera</a></li>
                     <li><a href="propuesta">Proponer</a></li>

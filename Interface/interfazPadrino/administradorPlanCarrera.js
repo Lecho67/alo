@@ -64,7 +64,7 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
     <div class="templatemo-flex-row">
       <div class="templatemo-sidebar">
         <header class="templatemo-site-header">
-          <h1>Vortex Bird</h1>  
+          <h1>VortexBird</h1>  
         </header>
         <div class="profile-photo-container">
           <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
@@ -529,11 +529,24 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
 }
 
 /// GENERACION DEL REPORTE-PDF del Grupo9(/generar-reporte-grupal)
-function creadorDePaginasMiGrupo(miGrupo) {
+function creadorDePaginasMiGrupo(miGrupo,misGrupos,i) {
   let padrino = miGrupo.find((x) => x.RolParticipacion == "P");
   miGrupo = miGrupo.filter((x) => x.RolParticipacion !== "P");
   const incompletitud = 100 - padrino.PorcentajeCompletitud;
   let colaboradoresHtml = "";
+  let ul = "";
+  misGrupos.forEach((grupo, index) => {
+    if (i == index) {
+      ul += `
+      <li><a href="/migrupo/${index}" class="active">${grupo.nombre}</a></li>
+  `;
+    }else{
+      ul += `
+      <li><a href="/migrupo/${index}">${grupo.nombre}</a></li>
+  `;
+    }
+
+  });
   miGrupo.forEach((colaborador, index) => {
     colaboradoresHtml += `
         <div class="col-1 templatemo-overflow-hidden">
@@ -693,7 +706,7 @@ function creadorDePaginasMiGrupo(miGrupo) {
               <ul>
                 <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
                 
-                <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
+                <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
     
                 <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
                   
@@ -715,10 +728,10 @@ function creadorDePaginasMiGrupo(miGrupo) {
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
-                <nav class="templatemo-top-nav col-lg-12 col-md-12"style="margin-left: 35%;">
+                <nav class="templatemo-top-nav col-lg-12 col-md-12">
                   <ul class="text-uppercase">
                     <li><a href="/grupos" >Todos</a></li>
-                    <li><a href="" class="active">Mi Grupo</a></li>
+                    ${ul}
                   </ul>  
                 </nav>
               </div>
@@ -740,7 +753,7 @@ function creadorDePaginasMiGrupo(miGrupo) {
                   <input type="text" name="nombre" id="nombre" placeholder="Nombre del grupo" style="color: #000; background-color: #fff; border: 1px solid #ccc;"><br><br>
   
                   <label for="file">Foto de perfil:</label>
-                  <input type="file"class="ajustar-file" name="file" id="file" multiple><br>
+                  <input type="file"class="ajustar-file" name="file" id="file" accept="image/*" multiple ><br>
                   <input type="submit" class="ajustar-actulizar" value="Actualizar">
                 </form>
                 

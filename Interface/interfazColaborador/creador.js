@@ -68,7 +68,7 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">  
-      <title>Visual Admin Dashboard - Home</title>
+      <title>Plan Carrera - Inicio</title>
       <meta name="description" content="">
       <meta name="author" content="templatemo">
       <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
@@ -80,7 +80,7 @@ function creadorDePaginaIndexhtml(top3Grupo,top5Colab,usuario,actividadesPendien
       <div class="templatemo-flex-row">
         <div class="templatemo-sidebar">
           <header class="templatemo-site-header">
-            <h1>Vortex Bird</h1>  
+            <h1>VortexBird</h1>  
           </header>
           <div class="profile-photo-container">
             <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive">  
@@ -883,7 +883,7 @@ function creadorDePaginaSesion() {
   <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Inicio de Sesión</title>
+      <title>Plan Carrera - Inicio de Sesión</title>
       <link rel="stylesheet" href="css/styles.css">
   </head>
   <body>
