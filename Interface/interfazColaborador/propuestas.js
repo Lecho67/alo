@@ -5,7 +5,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
   let ur = 0;
   let estado = "";
   let buttonAction = "";
-  let buttonNueva = "";
+  let nuevaActividad = "";
   let buttonActualizar = "<hr>";
 
   actividadesPropuestas.forEach((element, i) => {
@@ -15,7 +15,40 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
   if (propuestaExistente[0].estado == "N") {
     buttonAction = `<button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="submitForm()">Enviar Propuesta</button>`;
     buttonActualizar = `<button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="updateForm()">Actualizar</button>`;
-    buttonNueva = `<button type="submit" class="templatemo-blue-button">Agregar Actividad</button>`;
+    nuevaActividad = `<form action="/agregarActividad/${propuestaExistente[0].id_PP}"
+     class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded" onsubmit="validarFormulario(''); handleClick();">
+      <div class="templatemo-widget-content templatemo-flex-row">
+        <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
+          <label for="inputLastName">Nombre De La Actividad</label>
+          <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" maxlength="400" required><br> 
+          <label for="inputLastName">Tipo de Actividad</label><br>
+          <select id="TipoActividad" name="TipoActividad">
+            <option>Retorno A Vortex Bird</option>
+            <option>Desarrollo Personal</option>
+          </select><br><br>
+          <label for="UnidadesActividad">Unidades:</label>
+          <input type="number" class="form-control" id="UnidadesActividad" name="UnidadesActividad" placeholder="Ingrese el número de unidades que usa esta actividad" min="1" max="${
+            72 - unit
+          }" required>
+        </div>
+
+        <div class="col-1" style="text-align: center; margin: 10px;"> 
+          <label for="inputLastName" >Descripción De La Actividad</label>
+          <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none"></textarea>
+        </div>
+
+        <div class=" col-1" style="text-align: center; margin-top: 10px;">
+          <label for="inputLastName">Fecha Inicio</label>
+          <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" placeholder="Fecha Inicio" required><br><br>
+          <label for="inputLastName">Fecha Finalización</label>
+          <input type="date" class="form-control" id="FechaFinalizacion" name ="FechaFinalizacion" placeholder="Fecha Finalización" required><br><br>
+          <label for="inputLastName">Presupuesto de la Actividad</label>
+          <input type="number" class="form-control" id="Presupuesto" name="Presupuesto" placeholder="Ingrese el presupuesto en COP" pattern="^\\d+(\\.\\d{1,2})?$" required><br>
+          <button id="agregarButton" type="submit" class="templatemo-blue-button">Agregar Actividad</button>
+        </div>
+      </div>
+    </form>`;
+
     actividadesPropuestas.forEach((element, i) => {
       var dia = element.fecha_inicio.getDate();
       var mes = element.fecha_inicio.getMonth() + 1;
@@ -57,9 +90,9 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
           <h2>Fecha Final: <span id="fecha_fin${
             i + 1
           }">${fechaString1}</span></h2><br><br>
-          <h2>Presupuesto: <span id="presupuesto${i + 1}">${
+          <h2>Presupuesto: <span id="presupuesto${i + 1}">$${
         element.presupuesto
-      }$</span></h2>
+      }</span></h2>
         </div>
       </div>
       <br>
@@ -69,7 +102,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
           <span style="text-align: left;" class="icon">▼</span>
         </summary>
                     <div>
-                      <form action="/actualizarActividad/${
+                      <form action="/actualizarActividadPropuesta/${
                         element.id_PA
                       }" class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validarFormulario(${
         element.id_PA
@@ -77,9 +110,9 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                         <div class="templatemo-widget-content templatemo-flex-row">
                           <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
                             <label for="inputLastName">Nombre De La Actividad</label>
-                            <input type="text" class="form-control" id="TituloActividad${
+                            <input type="text" class="form-control" id="TituloActividad maxlength="400"${
                               element.id_PA
-                            }" name ="TituloActividad" placeholder="Ingrese un Nombre"><br> 
+                            }" name ="TituloActividad" placeholder="Ingrese un Nombre" value="${element.titulo}"><br> 
                             <label for="inputLastName">Tipo de Actividad</label><br>
                             <select id="TipoActividad${
                               element.id_PA
@@ -92,29 +125,29 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                               element.id_PA
                             }" name="UnidadesActividad" placeholder="Ingrese el número de unidades que usa esta actividad" min="1" max="${
         72 + element.unidades - unit
-      }">
+      }" value="${element.unidades}">
                           </div>
     
                           <div class="col-1" style="text-align: center; margin: 10px;"> 
                             <label for="inputLastName" >Descripción De La Actividad</label>
                             <textarea  class="form-control" id="DescripcionActividad${
                               element.id_PA
-                            }" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none"></textarea>
+                            }" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none" maxlength="999">${element.descripcion}</textarea>
                           </div>
     
                           <div class=" col-1" style="text-align: center; margin-top: 10px;">
                             <label for="inputLastName">Fecha Inicio</label>
                             <input type="date" class="form-control" id="FechaInicio${
                               element.id_PA
-                            }" name ="FechaInicio" placeholder="Fecha Inicio"><br><br>
+                            }" name ="FechaInicio" placeholder="Fecha Inicio" value="${fechaISO}"><br><br>
                             <label for="inputLastName">Fecha Finalización</label>
                             <input type="date" class="form-control" id="FechaFinalizacion${
                               element.id_PA
-                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización"><br><br>
+                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización" value="${fechaISO1}"><br><br>
                             <label for="inputLastName">Presupuesto de la Actividad</label>
                             <input type="number" class="form-control" id="Presupuesto${
                               element.id_PA
-                            }" name ="Presupuesto" placeholder="Ingrese el presupuesto en COP" min="0" max="1000000000"><br>
+                            }" name ="Presupuesto" placeholder="Ingrese el presupuesto en COP" min="0" max="1000000000" value="${element.presupuesto}"><br>
                             <div class="templatemo-flex-row">
                               <div>
                                 <button type="submit" class="templatemo-blue-button">Actualizar</button>
@@ -256,8 +289,10 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
             // Establecer el valor formateado en el campo
             input.value = value;
         }
-        
-      
+
+          function handleClick() {
+            document.getElementById("agregarButton").disabled = true;
+        }
           
           function eliminarActividad(idActividad) {
             document.getElementById("myForm").action = "/eliminarActividad/"+idActividad;
@@ -290,18 +325,8 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
         } 
   
         function validarFormulario(id) {
-            var tituloActividad = document.getElementById('TituloActividad'+id).value;
-            var tipoActividad = document.getElementById('TipoActividad'+id).value;
-            var unidadesActividad = document.getElementById('UnidadesActividad'+id).value;
-            var descripcionActividad = document.getElementById('DescripcionActividad'+id).value;
             var fechaInicio = document.getElementById('FechaInicio'+id).value;
             var fechaFinalizacion = document.getElementById('FechaFinalizacion'+id).value;
-            var presupuesto = document.getElementById('Presupuesto'+id).value;
-  
-            if (tituloActividad === '' || tipoActividad === '' || unidadesActividad === '' || descripcionActividad === '' || fechaInicio === '' || fechaFinalizacion === '' || presupuesto === '') {
-              alert("Por favor, complete todos los campos obligatorios.");
-              return false; // Evitar el envío del formulario
-          }
   
             if (fechaInicio > fechaFinalizacion) {
                 alert("La fecha de finalización debe ser mayor que la fecha de inicio");
@@ -342,39 +367,33 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
       <body>  
         <!-- Left column -->
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones" id="link"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-                  
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-       
-                </ul>  
-              </nav>
-          </div>
+            <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <!-- Main content --> 
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
@@ -391,71 +410,35 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
               <form action="/enviarPropuesta" id="myForm" class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="templatemo-content-widget white-bg">
                     <div class="templatemo-widget-content templatemo-flex-row">
-                
-                      <div id="barchartU" style="width: 50%; height: 250px;"></div>
                       <div class="templatemo-content-widget light-gray-bg col-2" style="width: 50%;">
                         <h2>Unidades totales:  ${unit} / 72</h2><br>
                         <label for="inputLastName">Título</label>
-                        <input type="text" class="form-control" name="TituloPC" placeholder="${
+                        <input type="text" class="form-control" name="TituloPC" value="${
                           propuestaExistente[0].titulo
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="400">
                         <br>
                         <label for="inputLastName">Objetivo</label>
-                        <input type="text" class="form-control" name="ObjetivoPC" placeholder="${
+                        <input type="text" class="form-control" name="ObjetivoPC" value="${
                           propuestaExistente[0].objetivo
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="400">
                         <br>
                         <label for="inputLastName">Descripción</label>
-                        <input type="text" class="form-control" name="DescripcionPC" placeholder="${
+                        <input type="text" class="form-control" name="DescripcionPC" value="${
                           propuestaExistente[0].descripcion
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="999">
                         <div class="templatemo-widget-content templatemo-flex-row" style="display: grid; place-items: center;">
                           ${buttonActualizar}
                           ${buttonAction}
                         </div>
-  
                       </div>
-                       
+                      <div id="barchartU" style="width: 50%; height: 250px;"></div>
                     </div>
                     </form>
                     <!-- actividades -->
                     ${res}
                     <!-- Formulario -->
                     <hr>
-                  <form action="/agregarActividad/${
-                    propuestaExistente[0].id_PP
-                  }" class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return validarFormulario('')">
-                    <div class="templatemo-widget-content templatemo-flex-row">
-                      <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
-                        <label for="inputLastName">Nombre De La Actividad</label>
-                        <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" required><br> 
-                        <label for="inputLastName">Tipo de Actividad</label><br>
-                        <select id="TipoActividad" name="TipoActividad">
-                          <option>Retorno A Vortex Bird</option>
-                          <option>Desarrollo Personal</option>
-                        </select><br><br>
-                        <label for="UnidadesActividad">Unidades:</label>
-                        <input type="number" class="form-control" id="UnidadesActividad" name="UnidadesActividad" placeholder="Ingrese el número de unidades que usa esta actividad" min="1" max="${
-                          72 - unit
-                        }" required>
-                      </div>
-    
-                      <div class="col-1" style="text-align: center; margin: 10px;"> 
-                        <label for="inputLastName" >Descripción De La Actividad</label>
-                        <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none"></textarea>
-                      </div>
-    
-                      <div class=" col-1" style="text-align: center; margin-top: 10px;">
-                        <label for="inputLastName">Fecha Inicio</label>
-                        <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" placeholder="Fecha Inicio" required><br><br>
-                        <label for="inputLastName">Fecha Finalización</label>
-                        <input type="date" class="form-control" id="FechaFinalizacion" name ="FechaFinalizacion" placeholder="Fecha Finalización" required><br><br>
-                        <label for="inputLastName">Presupuesto de la Actividad</label>
-                        <input type="number" class="form-control" id="Presupuesto" name="Presupuesto" placeholder="Ingrese el presupuesto en COP" pattern="^\\d+(\\.\\d{1,2})?$" required><br>
-                        ${buttonNueva}
-                      </div>
-                    </div>
-                  </form>
+                  ${nuevaActividad}
               
                   <hr>
                     
@@ -508,39 +491,33 @@ function sinPropuestas() {
       <body>  
         <!-- Left column -->
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-            </div>
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones" id="link"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-                  
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-          </div>
+            <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <!-- Main content --> 
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
@@ -559,13 +536,13 @@ function sinPropuestas() {
                   <div class="templatemo-widget-content templatemo-flex-row" style="width: 50%;">
                     <div class="templatemo-content-widget light-gray-bg col-2">
                       <label>Título</label>
-                      <input type="text" class="form-control" name="TituloPC" placeholder="Ingrese un título">
+                      <input type="text" class="form-control" name="TituloPC" placeholder="Ingrese un título" maxlength="399">
                       <br>
                       <label>Objetivo</label>
-                      <input type="text" class="form-control" name="ObjetivoPC" placeholder="Ingrese un objetivo">
+                      <input type="text" class="form-control" name="ObjetivoPC" placeholder="Ingrese un objetivo" maxlength="399">
                       <br>
                       <label>Descripción</label>
-                      <input type="text" class="form-control" name="DescripcionPC" placeholder="Ingrese una descripción">
+                      <input type="text" class="form-control" name="DescripcionPC" placeholder="Ingrese una descripción" maxlength="999">
                       <div class="templatemo-widget-content templatemo-flex-row" style="display: grid; place-items: center;">
                         <button type="submit" class="templatemo-blue-button">Crear Nueva Propuesta</button>
                       </div>

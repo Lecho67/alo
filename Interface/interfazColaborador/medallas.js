@@ -15,41 +15,33 @@ function creadorDePaginasLogros(logros) {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
-      
-                  <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
-                  
-                  <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -188,41 +180,33 @@ function creadorDePaginasMedallas(logros, nombre) {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
-      
-                  <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Plan Carrera </a></li>
-                  
-                  <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -360,41 +344,33 @@ function creadorDePaginasLogrosEliminar() {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros" class="active"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -691,7 +667,7 @@ function creadorDePaginasLogrosEliminar() {
   return page;
 }
 
-function creadorDePaginasLogrosActuales(medallas) {
+function creadorDePaginasLogrosActuales(medallas) { 
 
   let cont = 0;
   let res = "<tr>";
@@ -730,41 +706,33 @@ function creadorDePaginasLogrosActuales(medallas) {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros" class="active"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -889,41 +857,33 @@ function creadorDePaginasSeleccionarLogrosActuales(medallas,medalla) {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -1027,41 +987,33 @@ function creadorDePaginasLogrosActualesEliminar() {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
+        <div class="templatemo-sidebar">
+          <header class="templatemo-site-header">
             <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+              <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+            </div> 
+          </header>
+            
+          <nav class="templatemo-left-nav">          
+            <ul>
+              <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros" class="active"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+              <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+  
+              <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+                
+              <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+              
+              <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+  
+              <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+  
+              <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+              
+              <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+            </ul>  
+          </nav>
+        </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -1285,39 +1237,33 @@ function creadorDePaginasLogrosCustom(medallas){
   
   <body>
       <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-              <header class="templatemo-site-header">
-                  <h1>Vortex Bird</h1>
-              </header>
-              <div class="profile-photo-container">
-                  <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive">
-              </div>
-              <div class="mobile-menu-icon">
-                  <i class="fa fa-bars"></i>
-              </div>
-              <nav class="templatemo-left-nav">
-                  <ul>
-                      <li><a href="/inicio"><img class="icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+      <div class="templatemo-sidebar">
+      <header class="templatemo-site-header">
+        <div class="profile-photo-container">
+          <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+        </div> 
+      </header>
+        
+      <nav class="templatemo-left-nav">          
+        <ul>
+          <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                      <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-  
-                      <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
-  
-                      <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-  
-                      <li><a href="/empresa"><img class="icon" src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-  
-                      <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-  
-                      <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-  
-                      <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-  
-                      <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-  
-                  </ul>
-              </nav>
-          </div>
+          <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+          <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+            
+          <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+          
+          <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+          <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+          <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+          
+          <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+        </ul>  
+      </nav>
+    </div>
           <div class="templatemo-content col-1 light-gray-bg">
               <div class="templatemo-top-nav-container">
                   <div class="row">
@@ -1466,41 +1412,33 @@ function creadorDePaginasSelectorLogrosCustom(medallas,medalla){
     </head>
     <body>
       <div class="templatemo-flex-row">
-        <div class="templatemo-sidebar">
-          <header class="templatemo-site-header">
-            <h1>Vortex Bird</h1>  
-          </header>
-          <div class="profile-photo-container">
-            <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-          </div>
-          <div class="mobile-menu-icon">
-              <i class="fa fa-bars"></i>
-            </div>
-          <nav class="templatemo-left-nav">          
-            <nav class="templatemo-left-nav">          
-              <ul>
-                <li><a href="/inicio"><img class = "icon"src="/images/casita.png" alt=""><br>Inicio</a></li>
+      <div class="templatemo-sidebar">
+      <header class="templatemo-site-header">
+        <div class="profile-photo-container">
+          <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+        </div> 
+      </header>
+        
+      <nav class="templatemo-left-nav">          
+        <ul>
+          <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-    
-                <li><a href="/buzon"><img class="icon"src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                  
-                <li><a href="/grupos"><img class="icon"src="/images/grupo.png" alt=""><br>Grupos</a></li>
-                
-                <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-    
-                <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                
-                <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-  
-                <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-    
-                <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-    
-              </ul>  
-            </nav>
-          </nav>
-        </div>
+          <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+          <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+            
+          <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+          
+          <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+          <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+          <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+          
+          <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+        </ul>  
+      </nav>
+    </div>
         <div class="templatemo-content col-1 light-gray-bg">
           <div class="templatemo-top-nav-container">
             <div class="row">
@@ -1629,41 +1567,33 @@ function creadorDePaginasLogrosCustomEliminar() {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-            <nav class="templatemo-left-nav">          
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="inicio"><img class = "icon"src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon"src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon"src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros" class="active"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-            </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros" class="active"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">

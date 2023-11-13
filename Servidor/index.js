@@ -6,14 +6,19 @@ const path = require("path");
 require('dotenv').config();
 
 //Passport Variables
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 
+var passport = require('passport');
+var session = require('express-session');
 
+const MySQLStore = require('express-mysql-session')(session);
+var cookieParser = require('cookie-parser');
+
+app.set('views', path.join(__dirname));
+app.set('view engine', 'ejs');
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../Interface")));
-
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     // Verifica si el error es causado por un archivo demasiado grande
@@ -25,7 +30,15 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 // Variables conexion BD
 let mysql = require("mysql");
 const mysql2 = require("mysql2/promise");
@@ -39,9 +52,12 @@ const db = mysql.createConnection({
 const pool = mysql2.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASSWORD, 
     database: process.env.DB_NAME,
   });
+
+
+
 
 async function conexionAsync(query, values) {
   try {
@@ -61,6 +77,7 @@ const interfazColaborador = {
   ...require("../Interface/interfazColaborador/monitoreoTareas.js"),
   ...require("../Interface/interfazColaborador/edicionPerfil.js"),
   ...require("../Interface/interfazColaborador/medallas.js"),
+  ...require("../Interface/interfazColaborador/login.js"),
 };
 const interfazPadrino = {
   ...require("../Interface/interfazPadrino/administradorPlanCarrera.js"),
@@ -69,7 +86,7 @@ const interfazDirectivo = {
   ...require("../Interface/interfazDirectivo/administradorEmpresa.js"),
 };
 
-let usuarioActivo = 1;
+let usuarioActivo = 0;
 let periodoActual = ["2023-Q3","2023-Q2","2023-Q1"];
 
 // Variables PDFKit (Generar reportes)
@@ -93,6 +110,42 @@ const upload = multer({ storage: storage,
 // const upload = multer({ dest: 'uploads/' }); 
 
 
+  
+// Importing file-store module 
+const filestore = require("session-file-store")(session) 
+  
+// Setting up the server 
+
+  
+
+app.use(session({ 
+  name: "session-id", 
+  secret: "GFGEnter", // Secret key, 
+  saveUninitialized: false, 
+  resave: false, 
+  // store: new filestore() 
+}))
+
+
+ 
+app.use(cookieParser());
+
+app.get("/login", (req, res) => {
+  res.send(interfazColaborador.login());
+});
+
+app.post("/verificacion", async (req, res) => {
+  let id = req.body.identificacion; 
+
+  idUsuario = await conexionAsync("SELECT identificacion FROM USUARIO WHERE identificacion = ?", [id]);
+  if(idUsuario.length > 0){
+    req.session.idUsuario = id;
+    res.redirect("/inicio");
+  }else{
+    res.redirect("/login");
+  }
+
+});
 
 app.get("/mostrarImagen/:id", (req, res) => {
   const id = req.params.id;
@@ -211,7 +264,7 @@ app.get("/videos/:videoName", (req, res) => {
   app.post("/generar-reporte-grupal", async (req, res) => {
     const id_grupo = await conexionAsync(`SELECT grupo_id
           FROM PARTICIPACION
-          WHERE usuario_id = ${usuarioActivo};`);
+          WHERE usuario_id = ${req.session.idUsuario};`);
 
     const doc = new PDFDocument({ size: "letter" });
 
@@ -643,6 +696,9 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/inicio", async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+    }else{
     try {
       const top3Grupo =
         await conexionAsync(`SELECT G.nombre AS NombreGrupo, GROUP_CONCAT(DISTINCT CASE WHEN P.rol = 'P' THEN U.nombre ELSE NULL END) AS Padrino,
@@ -664,13 +720,13 @@ app.get("/videos/:videoName", (req, res) => {
           SELECT COALESCE(SUM(A.unidades), 0)
           FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
           WHERE PC.id_usuario = U.identificacion AND A.estado = true
-          ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ?;`, [usuarioActivo]
+          ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ?;`, [req.session.idUsuario]
       );
       const actividadesPendientes = await conexionAsync(
         `SELECT A.titulo, A.fecha_fin
         FROM ACTIVIDAD A
         JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
-        WHERE PC.id_usuario = ? AND A.estado = false;`, [usuarioActivo]
+        WHERE PC.id_usuario = ? AND A.estado = false;`, [req.session.idUsuario]
       );
 
       console.log(actividadesPendientes);
@@ -686,7 +742,7 @@ app.get("/videos/:videoName", (req, res) => {
     } catch (error) {
       console.error("Error:", error);
       res.sendFile(path.join(__dirname, '../Interface/404.html'));
-    }
+    }}
   });
 
 
@@ -695,10 +751,13 @@ app.get("/videos/:videoName", (req, res) => {
 
 //  EMPRESA  //
   app.get("/empresa", async (req, res) => {
-    
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
-      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [usuarioActivo]);
-      const usuarios = await conexionAsync('SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, G.nombre AS Grupo, P.rol AS CargoEnParticipacion FROM USUARIO U JOIN PARTICIPACION P ON U.identificacion = P.usuario_id JOIN GRUPO G ON P.grupo_id = G.id_grupo', []);
+      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [req.session.idUsuario]);
+      const usuarios = await conexionAsync('SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, G.nombre AS Grupo, P.rol AS CargoEnParticipacion FROM USUARIO U JOIN PARTICIPACION P ON U.identificacion = P.usuario_id JOIN GRUPO G ON P.grupo_id = G.id_grupo ORDER BY G.nombre, P.rol DESC', []);
       
       if (RolUsuario[0].rol === "directivo") {
         res.send(interfazDirectivo.creadorDePaginaEmpresa(usuarios));
@@ -712,9 +771,12 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/empresaPlanCarrera", async (req, res) => {
-    
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    } 
     try {
-      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [usuarioActivo]);
+      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [req.session.idUsuario]);
       const usuarios = await conexionAsync(`SELECT U.nombre AS Nombre, U.apellido AS Apellido, U.rol AS Rol, U.cargo AS Cargo, U.identificacion AS Identificacion, PC.titulo AS TituloPC 
       FROM USUARIO U
       INNER JOIN PLANCARRERA PC ON PC.id_usuario = U.identificacion`, []);
@@ -731,9 +793,13 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/planCarrera/:id_U", async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     let usuario = req.params.id_U;
     try {
-      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [usuarioActivo]);
+      const RolUsuario = await conexionAsync('SELECT U.rol FROM USUARIO U WHERE U.identificacion = ?', [req.session.idUsuario]);
 
       if (RolUsuario[0].rol === "directivo") {
         const usuarioPlanCarrera = await conexionAsync(
@@ -786,8 +852,12 @@ app.get("/videos/:videoName", (req, res) => {
 //  GRUPOS  //
 
   app.get("/grupos", async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
-      const misGrupos = await conexionAsync('SELECT G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [usuarioActivo]);
+      const misGrupos = await conexionAsync('SELECT G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [req.session.idUsuario]);
       const Miembrosgrupos =
         await conexionAsync(`SELECT U.nombre AS Nombre,U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo,G.id_grupo AS id_grupo, P.rol AS RolParticipacion,
           (
@@ -816,9 +886,14 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/migrupo/:i", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     let index = req.params.i;
     try { 
-      const misGrupos = await conexionAsync('SELECT P.grupo_id, G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [usuarioActivo]);
+      const misGrupos = await conexionAsync('SELECT P.grupo_id, G.nombre, P.rol, G.periodo FROM PARTICIPACION P INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo WHERE P.usuario_id = ? ORDER BY P.rol DESC', [req.session.idUsuario]);
       const migrupo = await conexionAsync(`SELECT U.nombre AS Nombre, U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo, G.id_grupo AS id_grupo, P.rol AS RolParticipacion, (SELECT COALESCE(SUM(M.puntos), 0) FROM MEDALLA M JOIN PLANCARRERA PC ON M.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion) AS PuntosLogroTotales, (((SELECT COALESCE(SUM(A.unidades), 0) FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion AND A.estado = true) / 72 * 100)) AS PorcentajeCompletitud FROM USUARIO U INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo ORDER BY PorcentajeCompletitud DESC`, []);
   
       let miGrupo = migrupo.filter((x) => x.id_grupo == misGrupos[index].grupo_id);
@@ -835,6 +910,10 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/grupo/:grupoId", async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const id_grupo = req.params.grupoId;
   
@@ -843,7 +922,9 @@ app.get("/videos/:videoName", (req, res) => {
         const migrupo = await conexionAsync('SELECT U.nombre AS Nombre, U.identificacion AS Identificacion, U.apellido AS Apellido, U.rol AS RolUsuario, U.cargo AS Cargo, G.nombre AS NombreGrupo, G.id_grupo AS id_grupo, P.rol AS RolParticipacion, (SELECT COALESCE(SUM(M.puntos), 0) FROM MEDALLA M JOIN PLANCARRERA PC ON M.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion) AS PuntosLogroTotales, (((SELECT COALESCE(SUM(A.unidades), 0) FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera WHERE PC.id_usuario = U.identificacion AND A.estado = true) / 72 * 100)) AS PorcentajeCompletitud FROM USUARIO U INNER JOIN PARTICIPACION P ON U.identificacion = P.usuario_id INNER JOIN GRUPO G ON P.grupo_id = G.id_grupo ORDER BY PorcentajeCompletitud DESC', []);
   
         let miGrupo = migrupo.filter((x) => x.id_grupo == id_grupo);
-        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo));
+        var temp = [];
+        var temp1 = 0;
+        res.send(interfazColaborador.creadorDePaginasMiGrupo(miGrupo,temp,temp1));
       } else {
         console.error("Error:", error);
         res.sendFile(path.join(__dirname, '../Interface/404.html'));
@@ -855,6 +936,10 @@ app.get("/videos/:videoName", (req, res) => {
   });
   
   app.post("/subirFotoGrupo/:idGrupo", upload.single("file"), async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const idGrupo = req.params.idGrupo;
       const nombreGrupo = req.body.nombre;
@@ -915,11 +1000,16 @@ app.get("/videos/:videoName", (req, res) => {
 //  CLASIFICACIONES  //
   
   app.get("/clasificaciones", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
       try {
           const modoCompetitivo = await conexionAsync(`SELECT competitivo
           FROM USUARIO
           WHERE identificacion = ?
-          `, [usuarioActivo]);
+          `, [req.session.idUsuario]);
           console.log(modoCompetitivo);
           if (modoCompetitivo[0].competitivo == true) {
                   const clasificacionGlobal =
@@ -952,6 +1042,11 @@ app.get("/videos/:videoName", (req, res) => {
   });
   
   app.get("/clasificacionesGrupos", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const clasificacionesGrupos =
         await conexionAsync(`SELECT G.nombre AS NombreGrupo, GROUP_CONCAT(DISTINCT CASE WHEN P.rol = 'P' THEN U.nombre ELSE NULL END) AS Padrino, G.id_grupo,
@@ -1022,6 +1117,10 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/miperfil", async (req, res) => {
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const usuarioPerfil = await conexionAsync(
         `SELECT
@@ -1046,7 +1145,7 @@ app.get("/videos/:videoName", (req, res) => {
           GROUP BY PC.id_usuario
       ) AS MS ON U.identificacion = MS.id_usuario
       WHERE U.identificacion = ?
-      GROUP BY U.identificacion, U.nombre, U.rol, G.nombre, P.rol;`,[usuarioActivo]
+      GROUP BY U.identificacion, U.nombre, U.rol, G.nombre, P.rol;`,[req.session.idUsuario]
       );
       res.send(interfazColaborador.creadorDePaginasMiPerfil(usuarioPerfil));
     } catch (error) {
@@ -1056,8 +1155,13 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/foto/usuario", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
       const result = await conexionAsync(
-        `SELECT foto FROM Usuario where identificacion = ?`,[usuarioActivo]
+        `SELECT foto FROM Usuario where identificacion = ?`,[req.session.idUsuario]
       );
       if (result.length > 0) {
         // Asegúrate de que se encontró un resultado en la consulta.
@@ -1091,11 +1195,16 @@ app.get("/videos/:videoName", (req, res) => {
 //   BUZON   //
 
   app.get("/buzon", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const id_grupo = await conexionAsync(`SELECT p.grupo_id, u.rol as rol_u, p.rol as rol_p
           FROM PARTICIPACION P
           INNER JOIN USUARIO U ON U.identificacion = P.usuario_id
-          WHERE usuario_id = ?`, [usuarioActivo]);
+          WHERE usuario_id = ?`, [req.session.idUsuario]);
       if (id_grupo[0].rol_u == 'directivo'){
         let propuestasPC,evidencias,propuestasPCT = [];
         for (const grupo of id_grupo) {
@@ -1532,6 +1641,11 @@ app.get("/videos/:videoName", (req, res) => {
 //  PROPUESTAS  //
 
   app.get("/propuesta", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const propuestaExistente = await conexionAsync(`SELECT *
           FROM PROPUESTA_P PP
@@ -1540,7 +1654,7 @@ app.get("/videos/:videoName", (req, res) => {
               FROM USUARIO U INNER JOIN PLANCARRERA PC 
               ON U.identificacion = PC.id_usuario
               WHERE identificacion = ?
-          );`,[usuarioActivo]);
+          );`,[req.session.idUsuario]);
 
       if (propuestaExistente.length === 0) {
         res.send(interfazColaborador.sinPropuestas());
@@ -1559,7 +1673,7 @@ app.get("/videos/:videoName", (req, res) => {
   app.post("/propuesta-nueva", async (req, res) => {
     let id_planCarrera = await conexionAsync(`SELECT id_plancarrera
       FROM PLANCARRERA PC
-      WHERE id_usuario = ?;`,[usuarioActivo]);
+      WHERE id_usuario = ?;`,[req.session.idUsuario]);
 
     id_planCarrera = id_planCarrera[0].id_plancarrera;
     const TituloPC = req.body.TituloPC;
@@ -1583,7 +1697,7 @@ app.get("/videos/:videoName", (req, res) => {
   app.post("/actualizacion", async (req, res) => {
     let id_planCarrera = await conexionAsync(`SELECT id_plancarrera
       FROM PLANCARRERA PC
-      WHERE id_usuario = ?;`,[usuarioActivo]);
+      WHERE id_usuario = ?;`,[req.session.idUsuario]);
 
     id_planCarrera = id_planCarrera[0].id_plancarrera;
     const TituloPC = req.body.TituloPC;
@@ -1609,9 +1723,14 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.post("/enviarPropuesta", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     let id_planCarrera = await conexionAsync(`SELECT id_plancarrera
       FROM PLANCARRERA PC
-      WHERE id_usuario = ?;`,[usuarioActivo]);
+      WHERE id_usuario = ?;`,[req.session.idUsuario]);
 
     id_planCarrera = id_planCarrera[0].id_plancarrera;
 
@@ -1632,9 +1751,14 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.post("/cancelarPropuesta", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     let id_planCarrera = await conexionAsync(`SELECT id_plancarrera
       FROM PLANCARRERA PC
-      WHERE id_usuario = ?;`,[usuarioActivo]);
+      WHERE id_usuario = ?;`,[req.session.idUsuario]);
 
     id_planCarrera = id_planCarrera[0].id_plancarrera;
 
@@ -1743,13 +1867,18 @@ app.get("/videos/:videoName", (req, res) => {
 //  Mi PLAN CARRERA y Monitoreo de tareas  //
 
   app.get("/mi-plan-carrera", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     try {
       const usuarioPlanCarrera = await conexionAsync(
         `SELECT U.nombre AS NombreUsuario, ((
               SELECT COALESCE(SUM(A.unidades), 0)
               FROM ACTIVIDAD A JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
               WHERE PC.id_usuario = U.identificacion AND A.estado = true
-              ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ?`,[usuarioActivo]
+              ) / 72 * 100 ) AS PorcentajeCompletitud FROM USUARIO U WHERE U.identificacion = ?`,[req.session.idUsuario]
       );
       const planCarrera = await conexionAsync(
         `SELECT
@@ -1757,7 +1886,7 @@ app.get("/videos/:videoName", (req, res) => {
               PC.objetivo AS ObjetivoPlanCarrera,
               PC.descripcion AS DescripcionPlanCarrera
               FROM PLANCARRERA PC
-              WHERE PC.id_usuario = ?`,[usuarioActivo]
+              WHERE PC.id_usuario = ?`,[req.session.idUsuario]
       );
       const actividades = await conexionAsync(
         `SELECT
@@ -1771,7 +1900,7 @@ app.get("/videos/:videoName", (req, res) => {
               A.estado AS EstadoActividad
               FROM ACTIVIDAD A
               INNER JOIN PLANCARRERA PC ON A.id_plancarrera = PC.id_plancarrera
-              WHERE PC.id_usuario = ?`,[usuarioActivo]
+              WHERE PC.id_usuario = ?`,[req.session.idUsuario]
       );
 
       res.send(
@@ -1820,9 +1949,12 @@ app.get("/videos/:videoName", (req, res) => {
 //  AJUSTES  //
 
   app.get("/ajustes", async (req, res) => {
-
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     competitivo = await conexionAsync(
-      `SELECT competitivo FROM USUARIO WHERE identificacion = ?`,[usuarioActivo]
+      `SELECT competitivo FROM USUARIO WHERE identificacion = ?`,[req.session.idUsuario]
     )
     res.send(interfazColaborador.creadorDePaginasAjustes(competitivo));
   });
@@ -1886,7 +2018,7 @@ app.get("/videos/:videoName", (req, res) => {
               SET ${setClause}
               WHERE identificacion = ?`;
 
-        values.push(usuarioActivo);
+        values.push(req.session.idUsuario);
 
         try{
           await conexionAsync(sql,values)
@@ -1920,7 +2052,7 @@ app.get("/videos/:videoName", (req, res) => {
           SET ${setClause}
           WHERE identificacion = ?`;
 
-      values.push(usuarioActivo);
+      values.push(req.session.idUsuario);
 
       try{
         await conexionAsync(sql,values)
@@ -1937,6 +2069,11 @@ app.get("/videos/:videoName", (req, res) => {
 //  LOGROS  //
 
   app.get("/mislogros", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     const planCarrera = await conexionAsync(
       `SELECT
       PC.id_plancarrera AS id_planCarrera,
@@ -1944,19 +2081,25 @@ app.get("/videos/:videoName", (req, res) => {
       PC.objetivo AS ObjetivoPlanCarrera,
       PC.descripcion AS DescripcionPlanCarrera
       FROM PLANCARRERA PC
-      WHERE PC.id_usuario = ?`,[usuarioActivo]
+      WHERE PC.id_usuario = ?`,[req.session.idUsuario]
     );
     let logros = await conexionAsync(
       `SELECT M.nombre, M.foto, M.descripcion,M.tipo,M.puntos, U.medalla_1, U.medalla_2, U.medalla_3
       FROM USUARIO U
       INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
       INNER JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-      WHERE U.identificacion = ?`,[usuarioActivo]
+      WHERE U.identificacion = ?`,[req.session.idUsuario]
     );
     res.send(interfazColaborador.creadorDePaginasLogros(logros));
   });
 
   app.get("/logro/:nombre", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
+
     const nombre = req.params.nombre;
     const planCarrera = await conexionAsync(
       `SELECT
@@ -1965,14 +2108,14 @@ app.get("/videos/:videoName", (req, res) => {
       PC.objetivo AS ObjetivoPlanCarrera,
       PC.descripcion AS DescripcionPlanCarrera
       FROM PLANCARRERA PC
-      WHERE PC.id_usuario = ?`,[usuarioActivo]
+      WHERE PC.id_usuario = ?`,[req.session.idUsuario]
     );
     let logros = await conexionAsync(
       `SELECT M.nombre, M.foto, M.descripcion,M.tipo,M.puntos, U.medalla_1, U.medalla_2, U.medalla_3
       FROM USUARIO U
       INNER JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
       INNER JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-      WHERE U.identificacion = ?`,[usuarioActivo]
+      WHERE U.identificacion = ?`,[req.session.idUsuario]
     );
 
 
@@ -1981,10 +2124,15 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.get("/agregarAlPefil/:idMedalla", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     const idMedalla = req.params.idMedalla;
-    const medallas = await conexionAsync(`select medalla_1,medalla_2,medalla_3 from usuario where identificacion = ?`,[usuarioActivo]);
+    const medallas = await conexionAsync(`select medalla_1,medalla_2,medalla_3 from usuario where identificacion = ?`,[req.session.idUsuario]);
     
-    await conexionAsync(`update Usuario set medalla_1 = ? , medalla_2 = ?,medalla_3=? where identificacion = ?`,[idMedalla,medallas[0].medalla_1,medallas[0].medalla_2,usuarioActivo]);
+    await conexionAsync(`update Usuario set medalla_1 = ? , medalla_2 = ?,medalla_3=? where identificacion = ?`,[idMedalla,medallas[0].medalla_1,medallas[0].medalla_2,req.session.idUsuario]);
 
     res.redirect("/mislogros");
   });
@@ -1995,23 +2143,33 @@ app.get("/videos/:videoName", (req, res) => {
 
   app.get("/logros-actuales", async (req, res) => {
 
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
+
     const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera,U.medalla_1,U.medalla_2,U.medalla_3
     FROM USUARIO U
     JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
     JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-    WHERE U.identificacion =?`,[usuarioActivo]);
+    WHERE U.identificacion =?`,[req.session.idUsuario]);
 
     res.send(interfazColaborador.creadorDePaginasLogrosActuales(medallas));
   });
 
   app.get("/logrosActuales/:idMedalla", async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     const idMedalla = req.params.idMedalla;
 
     const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera,U.medalla_1,U.medalla_2,U.medalla_3
     FROM USUARIO U
     JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
     JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-    WHERE U.identificacion =?`,[usuarioActivo]);
+    WHERE U.identificacion =?`,[req.session.idUsuario]);
 
 
     const medalla = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera
@@ -2029,16 +2187,26 @@ app.get("/videos/:videoName", (req, res) => {
 
   app.get('/logros-custom', async (req, res) => {
 
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
+
     const medallas = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera,U.medalla_1,U.medalla_2,U.medalla_3
     FROM USUARIO U
     JOIN PLANCARRERA PC ON U.identificacion = PC.id_usuario
     JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-    WHERE U.identificacion =?`,[usuarioActivo]);
+    WHERE U.identificacion =?`,[req.session.idUsuario]);
     res.send(interfazColaborador.creadorDePaginasLogrosCustom(medallas));
 
   });
 
   app.post('/CrearMedalla', upload.single('file'), async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     const nombre = req.body.nombre;
     const descripcion = req.body.descripcion;
     const file = req.file;
@@ -2050,7 +2218,7 @@ app.get("/videos/:videoName", (req, res) => {
       PC.objetivo AS ObjetivoPlanCarrera,
       PC.descripcion AS DescripcionPlanCarrera
       FROM PLANCARRERA PC
-      WHERE PC.id_usuario =?`,[usuarioActivo]
+      WHERE PC.id_usuario =?`,[req.session.idUsuario]
     );
     if (!file) {
       return res.status(400).send("No se ha proporcionado ningún archivo.");
@@ -2090,9 +2258,14 @@ app.get("/videos/:videoName", (req, res) => {
     });
   
 
-  });
+  }); 
 
   app.get('/SeleccionLogro/:idMedalla', async (req, res) => {
+
+    if (!req.session.idUsuario) {
+      res.redirect('/login');
+      return;
+    }
     const idMedalla = req.params.idMedalla;
 
     const medalla = await conexionAsync(`SELECT M.id_medalla,M.nombre,M.descripcion,M.tipo,M.id_plancarrera
@@ -2105,7 +2278,7 @@ app.get("/videos/:videoName", (req, res) => {
     FROM USUARIO U
     JOIN PLANCARRERA PC ON U.identificacion = PC .id_usuario
     JOIN MEDALLA M ON PC.id_plancarrera = M.id_plancarrera
-    WHERE U.identificacion =?`,[usuarioActivo]);
+    WHERE U.identificacion =?`,[req.session.idUsuario]);
     res.send(interfazColaborador.creadorDePaginasSelectorLogrosCustom(medallas,medalla));
 
 
@@ -2141,9 +2314,9 @@ app.get("/lecho", (req, res) => {
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, '../Interface/404.html'));
 });
-
-app.listen(3000, () => {
-  console.log("El servidor está escuchando en http://localhost:3000");
+let port = 4000
+app.listen(port, () => {
+  console.log("El servidor está escuchando en http://localhost:"+port);
 });
 
 // Se acabo

@@ -62,39 +62,33 @@ function creadorDePaginaBuzon(propuestas,evidencias) {
   </head>
   <body>
     <div class="templatemo-flex-row">
-      <div class="templatemo-sidebar">
-        <header class="templatemo-site-header">
-          <h1>VortexBird</h1>  
-        </header>
-        <div class="profile-photo-container">
-          <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-        </div>
-        <div class="mobile-menu-icon">
-            <i class="fa fa-bars"></i>
-          </div>
-          <nav class="templatemo-left-nav">          
-            <ul>
-              <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+    <div class="templatemo-sidebar">
+    <header class="templatemo-site-header">
+      <div class="profile-photo-container">
+        <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+      </div> 
+    </header>
+      
+    <nav class="templatemo-left-nav">          
+      <ul>
+        <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-              <li><a href="/mi-plan-carrera"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-  
-              <li><a href="/buzon"class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                
-              <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-              
-              <li><a href="/empresa" ><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-  
-              <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-              
-              <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
+        <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
 
-              <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-  
-              <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-  
-            </ul>  
-          </nav>
-      </div>
+        <li><a href="/buzon" class="active"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+          
+        <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+        
+        <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+        <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+        <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+        
+        <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+      </ul>  
+    </nav>
+  </div>
       <div class="templatemo-content col-1 light-gray-bg">
         <div class="templatemo-content-container">
           <div class="templatemo-content-widget no-padding ">
@@ -216,9 +210,9 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
           <h2>Fecha Final: <span id="fecha_fin${
             i + 1
           }">${fechaString1}</span></h2><br><br>
-          <h2>Presupuesto: <span id="presupuesto${i + 1}">${
+          <h2>Presupuesto: <span id="presupuesto${i + 1}">$${
         element.presupuesto
-      }$</span></h2>
+      }</span></h2>
         </div>
       </div>
       <br>
@@ -238,7 +232,7 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                             <label for="inputLastName">Nombre De La Actividad</label>
                             <input type="text" class="form-control" id="TituloActividad${
                               element.id_PA
-                            }" name ="TituloActividad" placeholder="Ingrese un Nombre" value="${element.titulo}"><br> 
+                            }" name ="TituloActividad" placeholder="Ingrese un Nombre" value="${element.titulo}" maxlength="399"><br> 
                             <label for="inputLastName">Tipo de Actividad</label><br>
                             <select id="TipoActividad${
                               element.id_PA
@@ -258,7 +252,7 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                             <label for="inputLastName" >Descripción De La Actividad</label>
                             <textarea  class="form-control" id="DescripcionActividad${
                               element.id_PA
-                            }" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none">${element.descripcion}</textarea>
+                            }" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none" maxlength="1000">${element.descripcion}</textarea>
                           </div>
     
                           <div class=" col-1" style="text-align: center; margin-top: 10px;">
@@ -404,39 +398,33 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
       <body>  
         <!-- Left column -->
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="/buzon"  class="active"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="/clasificaciones" id="link"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-                  
-                  <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-       
-                </ul>  
-              </nav>
-          </div>
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon" class="active"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <!-- Main content --> 
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-content-container">         
@@ -450,17 +438,17 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                         <label for="inputLastName">Título</label>
                         <input type="text" class="form-control" name="TituloPC" value="${
                           propuestaExistente[0].titulo
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="399">
                         <br>
                         <label for="inputLastName">Objetivo</label>
                         <input type="text" class="form-control" name="ObjetivoPC" value="${
                           propuestaExistente[0].objetivo
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="399">
                         <br>
                         <label for="inputLastName">Descripción</label>
                         <input type="text" class="form-control" name="DescripcionPC" value="${
                           propuestaExistente[0].descripcion
-                        }" style="opacity: 1;">
+                        }" style="opacity: 1;" maxlength="999">
                         <div class="templatemo-widget-content templatemo-flex-row" style="display: grid; place-items: center;">
                         <button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="updateForm()">Actualizar</button>
                         <button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="submitForm()">Aprobar Propuesta</button>
@@ -481,7 +469,7 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
                     <div class="templatemo-widget-content templatemo-flex-row">
                       <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
                         <label for="inputLastName">Nombre De La Actividad</label>
-                        <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre"><br> 
+                        <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" maxlength="399"><br> 
                         <label for="inputLastName">Tipo de Actividad</label><br>
                         <select id="TipoActividad" name="TipoActividad">
                           <option>Retorno A Vortex Bird</option>
@@ -495,7 +483,7 @@ function creadorDePaginaVistaPropuestas(actividadesPropuestas, propuestaExistent
     
                       <div class="col-1" style="text-align: center; margin: 10px;"> 
                         <label for="inputLastName" >Descripción De La Actividad</label>
-                        <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none"></textarea>
+                        <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none" maxlength="999"></textarea>
                       </div>
     
                       <div class=" col-1" style="text-align: center; margin-top: 10px;">
@@ -694,37 +682,33 @@ function creadorDePaginasMiGrupo(miGrupo,misGrupos,i) {
       </head>
       <body>
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="/images/profile-photo.png" alt="Profile Photo" class="img-responsive">  
-    
-            </div>
-            <nav class="templatemo-left-nav">          
-              <ul>
-                <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt=""><br>Inicio</a></li>
-                
-                <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-    
-                <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt=""><br>Buzón</a></li>
-                  
-                <li><a href="/grupos" class="active"><img class="icon" src="/images/grupo.png" alt=""><br>Grupos</a></li>
-                
-                <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt=""><br></i>Empresa</a></li>
-    
-                <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-    
-                <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt=""><br>Logros</a></li>
-    
-                <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt=""><br>Mi Perfil</a></li>
-    
-                <li><a href="/ajustes"><img class="icon" src="/images/ajustes.png" alt=""><br>Ajustes</a></li>
-    
-              </ul>  
-            </nav>
-          </div>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
+
+            <li><a href="/mi-plan-carrera"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos" class="active"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
               <div class="row">
@@ -750,7 +734,7 @@ function creadorDePaginasMiGrupo(miGrupo,misGrupos,i) {
                   <div>
                   <form action="/subirFotoGrupo/${padrino.id_grupo}" method="post" enctype="multipart/form-data">
                   <label for="nombre">Nombre:</label>
-                  <input type="text" name="nombre" id="nombre" placeholder="Nombre del grupo" style="color: #000; background-color: #fff; border: 1px solid #ccc;"><br><br>
+                  <input type="text" name="nombre" id="nombre" placeholder="Nombre del grupo" style="color: #000; background-color: #fff; border: 1px solid #ccc;" maxlength="399"><br><br>
   
                   <label for="file">Foto de perfil:</label>
                   <input type="file"class="ajustar-file" name="file" id="file" accept="image/*" multiple ><br>

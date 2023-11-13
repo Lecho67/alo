@@ -15,7 +15,7 @@ TABLE OF CONTENT
 body {	font-size: 13px; }
 body, .templatemo-left-nav { background: rgba(0, 125, 139, 1); }
 h1, h2, h3 { margin: 0; }
-h2 { font-size: 1.6em; }
+h2 { font-size: 1.4em; }
 h3 {
 	color: #7f7f7f;
 	font-size: 1.4em;
@@ -110,7 +110,67 @@ footer { padding: 15px; }
 
 /* 2. Left Column
 -----------------------------*/
-.templatemo-sidebar { width: 300px; }
+.templatemo-sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 250px;
+	height: 100%;
+	background-color: #333;
+	color: #fff;
+	padding-top: 20px;
+	z-index: 1; /* Place the sidebar above other content */
+	overflow-y: auto; /* Allow vertical scrolling for the menu */
+}
+.templatemo-left-nav ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+}
+
+.icon {
+	max-width: 20px;
+	max-height: 20px;
+	margin-right: 10px;
+}
+
+.templatemo-left-nav a:hover {
+	background-color: #555;
+}
+
+.templatemo-left-nav::-webkit-scrollbar {
+	width: 10px;
+}
+
+.templatemo-left-nav::-webkit-scrollbar-thumb {
+	background-color: #13895F;
+	border-radius: 5px;
+}
+
+.templatemo-left-nav::-webkit-scrollbar-track {
+	background-color: #13895F;
+}
+
+.templatemo-content {
+	margin-left: 250px; /* Adjust this value to match the sidebar width */
+	padding: 16px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+	.templatemo-sidebar {
+		width: 100%;
+	}
+
+	.templatemo-content {
+		margin-left: 0;
+	}
+
+	.templatemo-left-nav li {
+		padding: 10px;
+		font-size: 1rem;
+	}
+}
 .square {
 	width: 25px;
 	height: 25px;
@@ -212,19 +272,22 @@ footer { padding: 15px; }
 	height: 140px;
 	border-radius: 50%;
 }
-.templatemo-site-header { margin: 25px 60px; }
+.templatemo-site-header { margin: 5px 25px; }
 .templatemo-site-header h1 {
 	align-content: center;
 	color: white;
 	display: inline-block;
-	font-size: 1.8em;
+	font-size: 1.4em;
 	font-weight: 300;
 	letter-spacing: 1.5px;
 	margin: 0 5px;	
 	text-transform: uppercase;
 	vertical-align: middle;
 }
-.profile-photo-container { position: relative; }
+.profile-photo-container { 
+	text-align: center;
+	margin-bottom: 20px;
+}
 .profile-photo-overlay {
 	background-color: rgba(4, 152, 114, 0.35);
 	position: absolute;
@@ -346,7 +409,7 @@ footer { padding: 15px; }
   padding: 0;  
   overflow-x: hidden;
 }
-.templatemo-content-container {	padding: 40px 50px; }
+.templatemo-content-container {	padding: 20px 20px; }
 .templatemo-flex-row {
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -408,6 +471,12 @@ footer { padding: 15px; }
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	color: white;
+	padding: 15px;
+}
+.panel-default>.panel{
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	color: rgb(0, 0, 0);
 	padding: 15px;
 }
 .panel-default>.panel-heading-red {
@@ -488,7 +557,7 @@ footer { padding: 15px; }
 .templatemo-login-widget header { margin-bottom: 40px; }
 .templatemo-login-widget h1 {
 	display: inline-block;
-	font-size: 1.8em;
+	font-size: 1.4em;
 	text-align: center;
 	text-transform: uppercase;
 	vertical-align: middle;
@@ -719,7 +788,7 @@ input[type="radio"]:checked + label span {
 		margin: 15px; 
 	}
 	.templatemo-sidebar { width: 200px; } 
-	.templatemo-site-header h1 { font-size: 1.6em; }
+	.templatemo-site-header h1 { font-size: 1.4em; }
 	.square { 
 		width: 20px; 
 		height: 20px;
@@ -742,7 +811,7 @@ input[type="radio"]:checked + label span {
 }
 @media screen and (max-width: 767px) {
 	.templatemo-flex-row { display: block; }
-	.templatemo-site-header { margin: 20px 15px; }
+	.templatemo-site-header { margin: 20px 5px; }
 	.profile-photo-container {	display: none; /* Hide profile photo on mobile view */	}
 	.templatemo-search-form { margin: 10px; }
 	.templatemo-top-nav-container {	padding: 10px; }
@@ -799,6 +868,8 @@ input[type="radio"]:checked + label span {
     cursor: pointer;
     transition: background-color 0.3s;
 	margin: 10px; /* Añade un espacio de 10px alrededor del botón */
+	text-align: right;
+	float: center; /* Para alinear a la derecha */
   }
   
   .evidenciaalo:hover {
@@ -847,14 +918,12 @@ input[type="radio"]:checked + label span {
   }
 
   input[type="file"]::-webkit-file-upload-button {
-	background-color: #39ADB4;
-	color: #fff;
 	border: none;
 	border-radius: 4px;
-	padding: 10px 20px;
+	padding: 5px 10px;
 	font-size: 16px;
 	cursor: pointer;
-	margin: 10px; /* Añade un espacio de 10px alrededor del botón */
+	margin: 2px; /* Añade un espacio de 10px alrededor del botón */
   }
   
   input[type="file"]::-ms-browse {
@@ -1019,3 +1088,32 @@ input[type="submit"] {
 	background-color: #0c8086; /* Cambia el color de fondo al pasar por encima */
   }
  
+/* Cambia el color de fondo al pasar por encima */
+.custom-file-upload {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-file-upload input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+}
+
+.custom-file-upload span {
+    position: relative;
+    z-index: 1;
+}
+
+#fileNameDisplay {
+    margin-top: 10px;
+}
+
+
+.bordered-description {
+	border: 2px solid  #757474; /* Adjust border size and color as needed */
+	border-radius: 5px; /* Optional: Add rounded corners */
+	padding: 10px; /* Optional: Add padding for space inside the border */
+}

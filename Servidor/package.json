@@ -4,27 +4,32 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/index.js"
+    "start": "index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "connect-sqlite3": "^0.9.13",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-mysql-session": "^3.0.0",
     "express-session": "^1.17.3",
     "file-mime-type": "^2.0.0",
     "file-type": "^18.5.0",
     "magic-number": "^0.1.6",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.6.2",
+    "mysql2": "^3.6.3",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pdfkit": "^0.11.0",
     "pdfkit-table": "^0.1.99",
     "sequelize": "^6.33.0",
+    "session-file-store": "^1.5.0",
     "socket.io": "^4.7.2"
   }
 }

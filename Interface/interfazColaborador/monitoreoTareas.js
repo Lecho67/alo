@@ -4,7 +4,7 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
     let aux = "";
     let aux1 = "";
     let aux2 = "";
-  
+
   
     actividades.forEach((element,i) => {
           var dia = actividades[i].FechaInicioActividad.getDate();
@@ -33,25 +33,28 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
           }
           res+= `<div class="templatemo-widget-content templatemo-flex-row">
           <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
-            <h2>Actividad ${i+1}: ${actividades[i].TituloActividad}</h2><br><br>
-            <h2>Tipo: ${aux}</h2><br><br>
-            <h2>Unidades: ${actividades[i].UnidadesActividad}</h2><br><br>
+            <h2>Actividad ${i+1}</h2><br>${actividades[i].TituloActividad}<br><br>
+            <h2>Tipo </h2><br>${aux}<br><br>
+            <h2>Unidades </h2><br>${actividades[i].UnidadesActividad}<br><br>
             <form action="/subirEvidencia/${actividades[i].IdActividad}" method="post" enctype="multipart/form-data">
-        <input type="file" name="evidencia">
-        <input type="hidden" name="actividadId" value="${actividades[i].IdActividad}">
-        <button type="submit" class="evidenciaalo">Subir Evidencia</button>
-      </form>
+    <input type="file" name="evidencia" id="fileInput" >
+
+              <input type="hidden" name="actividadId" value="${actividades[i].IdActividad}">
           </div>
           <div class="col-1" style="text-align: center; margin: 10px;"> 
-            <h2>Descripción:</h2><br>
-            <p style="text-align: justify;">${actividades[i].DescripcionActividad}</p>
+            <h2 >Descripción:</h2><br>
+            <p class="bordered-description light-gray-bg" style="text-align: justify;">
+        ${actividades[i].DescripcionActividad}
+    </p>
           </div>
           <div class=" col-1" style="text-align: center; margin-top: 10px;">
-            <h2>Fecha Inicio: ${fechaComoString}</h2><br><br>
-            <h2>Fecha Final: ${fechaComoString1}</h2><br><br>
+            <h2>Fecha Inicio</h2><br>${fechaComoString}<br><br>
+            <h2>Fecha Final </h2><br>${fechaComoString1}<br><br>
             <h2>Estado: ${aux1}</h2><br><br>
             ${aux2}
+          <button type="submit" class="evidenciaalo">Subir Evidencia</button>
           </div>
+          </form>
         </div>
         <hr>`
     });
@@ -85,39 +88,33 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
       <body>  
         <!-- Left column -->
         <div class="templatemo-flex-row">
-          <div class="templatemo-sidebar">
-            <header class="templatemo-site-header">
-              <h1>Vortex Bird</h1>  
-            </header>
-            <div class="profile-photo-container">
-              <img src="images/profile-photo.png" alt="Profile Photo" class="img-responsive"> 
-            </div>
-            <div class="mobile-menu-icon">
-                <i class="fa fa-bars"></i>
-              </div>
-              <nav class="templatemo-left-nav">          
-                <ul>
-                  <li><a href="inicio"><img class = "icon" src="images/casita.png" alt=""><br>Inicio</a></li>
+        <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="profile-photo-container">
+            <img src="/images/Vortexbird.desarrolloSoftware.png" alt="Profile Photo" class="img-responsive">
+          </div> 
+        </header>
+          
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/inicio"><img class = "icon" src="/images/casita.png" alt="">Inicio</a></li>
 
-                  <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="images/nota.png" alt=""><br>Mi Plan Carrera </a></li>
-      
-                  <li><a href="buzon"><img class="icon" src="images/buzón.png" alt=""><br>Buzón</a></li>
-                    
-                  <li><a href="grupos"><img class="icon" src="images/grupo.png" alt=""><br>Grupos</a></li>
-                  
-                  <li><a href="empresa"><img class= "icon"src="images/Empresa.png" alt=""><br></i>Empresa</a></li>
-      
-                  <li><a href="clasificaciones" id="link"><img class="icon" src="images/Trofeo.png" alt=""><br>Clasificaciones</a></li>
-                  
-                  <li><a href="mislogros"><img class="icon" src="images/Insignias.png" alt=""><br>Logros</a></li>
-                  
-                  <li><a href="miperfil"><img class="icon" src="images/perfil.png" alt=""><br>Mi Perfil</a></li>
-      
-                  <li><a href="ajustes"><img class="icon" src="images/ajustes.png" alt=""><br>Ajustes</a></li>
-      
-                </ul>  
-              </nav>
-          </div>
+            <li><a href="/mi-plan-carrera" class="active"><img class="icon" src="/images/nota.png" alt="">Mi Plan Carrera </a></li>
+
+            <li><a href="/buzon"><img class="icon" src="/images/buzón.png" alt="">Buzón</a></li>
+              
+            <li><a href="/grupos"><img class="icon" src="/images/grupo.png" alt="">Grupos</a></li>
+            
+            <li><a href="/empresa"><img class= "icon"src="/images/Empresa.png" alt="">Empresa</a></li>
+
+            <li><a href="/clasificaciones"><img class="icon" src="/images/Trofeo.png" alt="">Clasificaciones</a></li>
+
+            <li><a href="/mislogros"><img class="icon" src="/images/Insignias.png" alt="">Logros</a></li>
+            
+            <li><a href="/miperfil"><img class="icon" src="/images/perfil.png" alt="">Mi Perfil</a></li>
+          </ul>  
+        </nav>
+      </div>
           <!-- Main content --> 
           <div class="templatemo-content col-1 light-gray-bg">
             <div class="templatemo-top-nav-container">
@@ -143,8 +140,8 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
                         
                         <div style="text-align: center; width: 100%;">
                           <div class="panel panel-default no-border"> 
-                            <div class="panel-heading border-radius-10">
-                              <h2>${planCarrera[0].TituloPlanCarrera}</h2>
+                            <div class="panel border-radius-10">
+                              <h1>${planCarrera[0].TituloPlanCarrera}</h1>
                             </div>
                           </div>
                           <div class="templatemo-content-widget light-gray-bg">
@@ -322,7 +319,7 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
     
         <script src="https://www.google.com/jsapi"></script> 
         <script>
-    
+      
           
           /* Google Chart 
           -------------------------------------------------------------------*/
@@ -347,13 +344,14 @@ function miPlanCarrera(usuarioPlanCarrera,planCarrera,actividades){
               ]);
     
               // Set chart options
-              var options = {'width':380, 'height':250};
+              var options = {'width':500, 'height':250, colors: ['#41BFBD','#EA520B']};
     
               // Instantiate and draw our chart, passing in some options.
               var pieChart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
               pieChart.draw(data, options);
     
           }
+        
           
         </script>
     
