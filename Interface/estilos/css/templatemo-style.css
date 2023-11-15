@@ -1117,3 +1117,20 @@ input[type="submit"] {
 	border-radius: 5px; /* Optional: Add rounded corners */
 	padding: 10px; /* Optional: Add padding for space inside the border */
 }
+
+
+.mi-boton {
+    background-color:#39ADB4; /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espaciado interno (arriba/abajo, izquierda/derecha) */
+    font-size: 16px; /* Tamaño de fuente */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cursor al pasar sobre el botón */
+    transition: background-color 0.3s; /* Transición suave del color de fondo */
+	margin-left: 10px;
+}
+
+.mi-boton:hover {
+    background-color: #0c8086; /* Nuevo color de fondo al pasar el ratón */
+}

@@ -15,16 +15,17 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
   if (propuestaExistente[0].estado == "N") {
     buttonAction = `<button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="submitForm()">Enviar Propuesta</button>`;
     buttonActualizar = `<button type="button" class="templatemo-blue-button" style="margin-left: 5px" onclick="updateForm()">Actualizar</button>`;
-    nuevaActividad = `<form action="/agregarActividad/${propuestaExistente[0].id_PP}"
-     class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded" onsubmit="validarFormulario(''); handleClick();">
+    nuevaActividad = `<form id="actividadForm" action="/agregarActividad/${propuestaExistente[0].id_PP}"
+     class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded" onsubmit="handleClick()">
       <div class="templatemo-widget-content templatemo-flex-row">
         <div class="col-1" style="text-align: center; margin-top: 10px; width: 100px;">
           <label for="inputLastName">Nombre De La Actividad</label>
-          <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" maxlength="400" required><br> 
+          <input type="text" class="form-control" id="TituloActividad" name ="TituloActividad" placeholder="Ingrese un Nombre" maxlength="450" required><br> 
           <label for="inputLastName">Tipo de Actividad</label><br>
           <select id="TipoActividad" name="TipoActividad">
             <option>Retorno A Vortex Bird</option>
             <option>Desarrollo Personal</option>
+            <option>Formación Profesional</option>
           </select><br><br>
           <label for="UnidadesActividad">Unidades:</label>
           <input type="number" class="form-control" id="UnidadesActividad" name="UnidadesActividad" placeholder="Ingrese el número de unidades que usa esta actividad" min="1" max="${
@@ -34,16 +35,16 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
 
         <div class="col-1" style="text-align: center; margin: 10px;"> 
           <label for="inputLastName" >Descripción De La Actividad</label>
-          <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none"></textarea>
+          <textarea  class="form-control" id="DescripcionActividad" name ="DescripcionActividad" cols="30" rows="10" placeholder="Descripción de la actividad" style="resize: none" maxlength="850" required></textarea>
         </div>
 
         <div class=" col-1" style="text-align: center; margin-top: 10px;">
           <label for="inputLastName">Fecha Inicio</label>
-          <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" placeholder="Fecha Inicio" required><br><br>
+          <input type="date" class="form-control" id="FechaInicio" name ="FechaInicio" onchange="actualizarFechaFinalizacion('')" placeholder="Fecha Inicio" required><br><br>
           <label for="inputLastName">Fecha Finalización</label>
           <input type="date" class="form-control" id="FechaFinalizacion" name ="FechaFinalizacion" placeholder="Fecha Finalización" required><br><br>
           <label for="inputLastName">Presupuesto de la Actividad</label>
-          <input type="number" class="form-control" id="Presupuesto" name="Presupuesto" placeholder="Ingrese el presupuesto en COP" pattern="^\\d+(\\.\\d{1,2})?$" required><br>
+          <input type="number" class="form-control" id="Presupuesto" name="Presupuesto" placeholder="Ingrese el presupuesto en COP" max="1000000000" required><br>
           <button id="agregarButton" type="submit" class="templatemo-blue-button">Agregar Actividad</button>
         </div>
       </div>
@@ -139,11 +140,13 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                             <label for="inputLastName">Fecha Inicio</label>
                             <input type="date" class="form-control" id="FechaInicio${
                               element.id_PA
-                            }" name ="FechaInicio" placeholder="Fecha Inicio" value="${fechaISO}"><br><br>
+                            }" name ="FechaInicio" placeholder="Fecha Inicio" onchange="actualizarFechaFinalizacion(${
+                              element.id_PA
+                            })" value="${fechaISO}"><br><br>
                             <label for="inputLastName">Fecha Finalización</label>
                             <input type="date" class="form-control" id="FechaFinalizacion${
                               element.id_PA
-                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización" value="${fechaISO1}"><br><br>
+                            }" name ="FechaFinalizacion" placeholder="Fecha Finalización" min="${fechaISO}" value="${fechaISO1}"><br><br>
                             <label for="inputLastName">Presupuesto de la Actividad</label>
                             <input type="number" class="form-control" id="Presupuesto${
                               element.id_PA
@@ -275,19 +278,12 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
         <script>
-        function formatCurrency(input) {
-            console.log('La función formatCurrency se está ejecutando');
-            // Obtener el valor sin formato
-            let value = input.value.replace(/[^\d.]/g, '');
-        
-            // Formatear el valor como moneda
-            if (value !== '') {
-                value = parseFloat(value).toFixed(2);
-                value = '$' + value.replace(/\\d(?=(\\d{3})+\\.)/g, '$&,');
-            }
-        
-            // Establecer el valor formateado en el campo
-            input.value = value;
+        function actualizarFechaFinalizacion(id) {
+          // Obtener el valor de la fecha de inicio
+          var fechaInicio = document.getElementById("FechaInicio"+id).value;
+      
+          // Actualizar el atributo 'min' del campo de fecha de finalización
+          document.getElementById("FechaFinalizacion"+id).min = fechaInicio;
         }
 
           function handleClick() {
@@ -322,19 +318,13 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
           }else{
             alert("Por favor, complete las unidades necesaria.");
           }
-        } 
-  
-        function validarFormulario(id) {
-            var fechaInicio = document.getElementById('FechaInicio'+id).value;
-            var fechaFinalizacion = document.getElementById('FechaFinalizacion'+id).value;
-  
-            if (fechaInicio > fechaFinalizacion) {
-                alert("La fecha de finalización debe ser mayor que la fecha de inicio");
-                return false;
-            }
-
-            return true;
         }
+
+        function toggleFormulario() {
+          var formulario = document.getElementById('actividadForm');
+          formulario.style.display = (formulario.style.display === 'none' || formulario.style.display === '') ? 'block' : 'none';
+        }
+      
     
         </script>
   
@@ -438,6 +428,7 @@ function propuestas(actividadesPropuestas, propuestaExistente) {
                     ${res}
                     <!-- Formulario -->
                     <hr>
+                  <button id="mostrarFormularioBtn" class="templatemo-blue-button" type="button" onclick="toggleFormulario()">Añadir Actividad</button>
                   ${nuevaActividad}
               
                   <hr>
@@ -531,27 +522,24 @@ function sinPropuestas() {
               </div>
             </div>
             <div class="templatemo-content-container">         
-              <form action="/propuesta-nueva" class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="templatemo-content-widget white-bg" style="display: grid; place-items: center">
-                  <div class="templatemo-widget-content templatemo-flex-row" style="width: 50%;">
-                    <div class="templatemo-content-widget light-gray-bg col-2">
-                      <label>Título</label>
-                      <input type="text" class="form-control" name="TituloPC" placeholder="Ingrese un título" maxlength="399">
-                      <br>
-                      <label>Objetivo</label>
-                      <input type="text" class="form-control" name="ObjetivoPC" placeholder="Ingrese un objetivo" maxlength="399">
-                      <br>
-                      <label>Descripción</label>
-                      <input type="text" class="form-control" name="DescripcionPC" placeholder="Ingrese una descripción" maxlength="999">
-                      <div class="templatemo-widget-content templatemo-flex-row" style="display: grid; place-items: center;">
-                        <button type="submit" class="templatemo-blue-button">Crear Nueva Propuesta</button>
-                      </div>
-  
+            <form action="/propuesta-nueva" class="templatemo-login-form" method="post" enctype="application/x-www-form-urlencoded">
+              <div class="templatemo-content-widget white-bg" style="display: grid; place-items: center">
+                <div class="templatemo-widget-content templatemo-flex-row" style="width: 50%;">
+                  <div class="templatemo-content-widget light-gray-bg col-2">
+                    <label>Título</label>
+                    <input type="text" class="form-control" name="TituloPC" placeholder="Ingrese un título" maxlength="450" required>
+                    <br>
+                    <label>Objetivo</label>
+                    <textarea class="form-control" name="ObjetivoPC" placeholder="Ingrese un objetivo" rows="5" maxlength="850" style="resize: none;" required></textarea>
+                    <br>
+                    <div class="templatemo-widget-content templatemo-flex-row" style="display: grid; place-items: center;">
+                      <button type="submit" class="templatemo-blue-button">Crear Nueva Propuesta</button>
                     </div>
                   </div>
                 </div>
-              </form>
-                    
+              </div>
+            </form>
+                 
                   
         </div>
               

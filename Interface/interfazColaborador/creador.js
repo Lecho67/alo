@@ -727,7 +727,7 @@ function creadorDePaginasMiPerfil(usuarioPerfil) {
               
               <div class="panel panel-default no-border">
                 <div class="panel-heading border-radius-10">
-                  <h2 class="text-uppercase">${usuarioPerfil[0].Nombre}</h2>
+                  <h2 class="text-uppercase">${usuarioPerfil[0].Nombre} ${usuarioPerfil[0].Apellido}</h2>
                 </div>
                 
                 <div class="panel-body">
@@ -779,13 +779,19 @@ function creadorDePaginasMiPerfil(usuarioPerfil) {
                           }</p>
                         </div>
                         <div class="col-1 col-lg-6 col-md-12">
+                        
                           <div id="pie_chart_div" class="templatemo-chart-small"></div> 
                         </div>
+                        
                       </div>
-  
+                      
   
                       
                     </div>
+                    <div>
+                    <form action="/ajustes" method="get">
+                        <button type="submit" class="mi-boton">Editar Perfil</button>
+                    </form>
                 </div>
               </div>            
               

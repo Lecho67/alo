@@ -1124,7 +1124,7 @@ app.get("/videos/:videoName", (req, res) => {
     try {
       const usuarioPerfil = await conexionAsync(
         `SELECT
-          U.nombre AS Nombre,
+          U.nombre AS Nombre, U.apellido AS Apellido,
           U.rol AS RolUsuario,U.medalla_1,U.medalla_2,U.medalla_3,
           U.identificacion AS id,
           U.cargo AS CargoUsuario,
@@ -1439,8 +1439,8 @@ app.get("/videos/:videoName", (req, res) => {
     const unidades = req.body.UnidadesActividad;
     let tipo = req.body.TipoActividad;
     if (tipo == "Retorno A Vortex Bird") {
-      tipo = 1;
-    } else {
+      tipo = "R";
+    } else if (tipo == ""){
       tipo = 0;
     }
     const fecha_inicio = req.body.FechaInicio;
@@ -1678,13 +1678,12 @@ app.get("/videos/:videoName", (req, res) => {
     id_planCarrera = id_planCarrera[0].id_plancarrera;
     const TituloPC = req.body.TituloPC;
     const ObjetivoPC = req.body.ObjetivoPC;
-    const DescripcionPC = req.body.DescripcionPC;
 
     try {
       // Realiza la actualización en la base de datos
       await conexionAsync(`
-            INSERT INTO PROPUESTA_P(titulo,objetivo,descripcion,estado,id_plancarrera) 
-            values(?,?,?,'N',?);`,[TituloPC,ObjetivoPC,DescripcionPC,id_planCarrera]);
+            INSERT INTO PROPUESTA_P(titulo,objetivo,estado,id_plancarrera) 
+            values(?,?,'N',?);`,[TituloPC,ObjetivoPC,id_planCarrera]);
 
       // Genera la página después de la actualización exitosa
       res.redirect("/propuesta");
@@ -1702,7 +1701,6 @@ app.get("/videos/:videoName", (req, res) => {
     id_planCarrera = id_planCarrera[0].id_plancarrera;
     const TituloPC = req.body.TituloPC;
     const ObjetivoPC = req.body.ObjetivoPC;
-    const DescripcionPC = req.body.DescripcionPC;
 
     try {
       // Realiza la actualización en la base de datos
@@ -1710,9 +1708,8 @@ app.get("/videos/:videoName", (req, res) => {
             UPDATE PROPUESTA_P
             SET
               titulo = ?,
-              objetivo = ?,
-              descripcion = ?
-              WHERE id_plancarrera = ?;`,[TituloPC,ObjetivoPC,DescripcionPC,id_planCarrera]);
+              objetivo = ?
+              WHERE id_plancarrera = ?;`,[TituloPC,ObjetivoPC,id_planCarrera]);
 
       // Genera la página después de la actualización exitosa
       res.redirect("/propuesta");
@@ -1796,29 +1793,29 @@ app.get("/videos/:videoName", (req, res) => {
   });
 
   app.post("/actualizarActividad/:id_PA", async (req, res) => {
-    const titulo = req.body.TituloActividad;
+    const titulo = req.body.TituloActividad;     
     const descripcion = req.body.DescripcionActividad;
     const unidades = req.body.UnidadesActividad;
     let tipo = req.body.TipoActividad;
     if (tipo == "Retorno A Vortex Bird") {
-      tipo = 1;
+      tipo = 1;  
     } else {
       tipo = 0;
     }
     const fecha_inicio = req.body.FechaInicio;
     const fecha_fin = req.body.FechaFinalizacion;
     const presupuesto = req.body.Presupuesto;
-    const id_PA = req.params.id_PA;
-
+    const id_PA = req.params.id_PA;  
+   
     try {
       // Realiza la actualización en la base de datos
       await conexionAsync(`
           UPDATE PROPUESTA_A
           SET
             titulo = ?,
-            descripcion = ?,
+            descripcion = ?, 
             unidades = ?,
-            tipo = ?,
+            tipo = ?, 
             presupuesto = ?,
             fecha_inicio = ?,
             fecha_fin = ?
@@ -2287,6 +2284,12 @@ app.get("/videos/:videoName", (req, res) => {
 
   app.get('/fotoMedalla/:idMedalla', async (req, res) => {
     const idMedalla = req.params.idMedalla
+    if (idMedalla === 'null') {
+      // En este caso, envía una imagen desde la carpeta del proyecto
+      const imagePath = path.join(__dirname, "../Interface/images/Insignias/null.png");
+      res.sendFile(imagePath);
+      return;
+  }
     const result = await conexionAsync(`SELECT foto FROM Medalla where id_medalla = ${idMedalla}`);
     if (result.length > 0) {
         // Asegúrate de que se encontró un resultado en la consulta.

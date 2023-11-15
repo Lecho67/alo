@@ -70,27 +70,39 @@ function creadorDePaginasAjustes(competitivo) {
                     </div> 
                   </div>
                   <div class="row form-group">
+                  <div class="templatemo-block margin-bottom-5" style="margin-left: 20px;">
+    <input type="checkbox" name="clasificacion" id="c3" value="1" ${competitivo[0].competitivo==1 ? 'checked' : ''} class="custom-checkbox">
+    <label for="c3" class="font-weight-400 checkbox-label"><span></span>Activar el Modo clasificación</label> 
+</div>
+
                   </div>
                   <div class="row form-group">
-                    <div class="form-group" style="text-align: center;">                  
-                        <label for="inputCurrentPassword">Imagen actual</label>
-                        <div><img src="/foto/usuario" class="imgcircle_perfil">
+    <div class="form-group" style="text-align: center;">
+        <label for="inputCurrentPassword">Imagen actual</label>
+        <div>
+            <img src="/foto/usuario" class="imgcircle_perfil" style="border-radius: 50%"; >
+            <br>
+            <br>
+
+            <div style="display: flex; justify-content: center; align-items: center;">
+                <details style="width: 50%;">
+                    <summary style="text-align: center; cursor: pointer; position: relative;">
+                        <h4 style="text-align: center; margin: 0; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">Cambiar Foto De Perfil</h4>
+                    </summary>
+                    <br>
+                    <div style="display: grid; place-items: center;">
+                        <input type="file" name="imagen" placeholder="Ingresa una imagen" accept="image/*" onchange="mostrarImagen(this)">
                         <br>
-                        <br>
-                        
-                        <div style="display: grid; place-items: center;">
-                        <details >
-                          <summary style="text-align: center;">
-                            <h4 style="text-align: center;">Cambiar Foto De Perfil</h4>
-                          </summary>
-                          <br>
-                          <div style="display: grid; place-items: center;">
-                            <input type="file" name="imagen" placeholder="Ingresa una imagen" accept="image/*">
-                          </div>
-                        </details>
-                      </div>
-                    </div>                
-                  </div>
+                        <div id="vistaPrevia" style="display: none; margin-top: 10px;">
+                            <h5>Vista previa:</h5>
+                            <img id="imagenPrevia" class="imgcircle_perfil" style=" border-radius: 50%">
+                        </div>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+</div>
                   <div class="row form-group">
                     <!-- <div class="col-lg-6 col-md-6 form-group"> 
                       <label class="control-label templatemo-block">Tipo de texto</label>                 
@@ -100,10 +112,7 @@ function creadorDePaginasAjustes(competitivo) {
                       </select>
                     </div> -->
                     <div class="col-lg-6 col-md-6 form-group pl-5">                  
-    <div class="templatemo-block margin-bottom-5">
-        <input type="checkbox" name="clasificacion" id="c3" value="1" ${competitivo[0].competitivo==1 ? 'checked' : ''} class="custom-checkbox">
-        <label for="c3" class="font-weight-400 checkbox-label"><span></span>Modo clasificación</label> 
-    </div>
+    
  </div>
                   </div>
                   <div class="form-group text-right">
@@ -118,6 +127,23 @@ function creadorDePaginasAjustes(competitivo) {
               </footer>
           </div>
         </div>
+        <script>
+    function mostrarImagen(input) {
+        var vistaPrevia = document.getElementById('vistaPrevia');
+        var imagenPrevia = document.getElementById('imagenPrevia');
+
+        vistaPrevia.style.display = 'block';
+
+        var archivo = input.files[0];
+        var lector = new FileReader();
+
+        lector.onload = function (e) {
+            imagenPrevia.src = e.target.result;
+        };
+
+        lector.readAsDataURL(archivo);
+    }
+</script>
       </body>
     </html>
     `;
